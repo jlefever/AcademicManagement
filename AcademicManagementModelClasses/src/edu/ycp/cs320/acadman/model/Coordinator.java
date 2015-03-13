@@ -10,7 +10,7 @@ public class Coordinator {
 		
 	}
 	
-	public void createIndicator(String name){
+	public void createIndicator(Coordinator toCreate){
 		
 	}
 	
@@ -18,11 +18,11 @@ public class Coordinator {
 		
 	}
 	
-	public void editIndicator(String name){
+	public void editIndicator(Indicator toEdit){
 	
 	}
 
-	public void editMeasurement(String name){
+	public void editMeasurement(Measurement toEdit){
 		
 	}
 }

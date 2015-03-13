@@ -6,11 +6,11 @@ public class Admin {
 		
 	}
 	
-	public void createUser(String user){
+	public void createUser(User toCreate){
 		
 	}
 	
-	public void editUser(String user){
+	public void editUser(User toEdit){
 		
 	}
 	

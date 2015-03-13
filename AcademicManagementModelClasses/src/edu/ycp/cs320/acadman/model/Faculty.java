@@ -6,7 +6,7 @@ public class Faculty {
 		
 	}
 	
-	public void createMeasurement(String name){
+	public void createMeasurement(Measurement toCreate){
 		
 	}
 	
