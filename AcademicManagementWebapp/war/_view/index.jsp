@@ -10,6 +10,10 @@
   <!-- Begin Page Content -->
             <div id="container">
                 <form action="login_process.php" method="post">
+               		 <p>
+                    <label for="Intsitution">Institution:</label>
+                    <input type="text" id="Institution" name="Institution">
+                    </p>
                 	<p>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username">
@@ -19,7 +23,7 @@
                     <input type="password" id="password" name="password">
                     </p>
                     <p>
-                     <label for="password">Re-enter Password</label>
+                     <label for="password">Re-enter Password:</label>
                     <input type="password" id="password" name="password">
                     </p>
                     <p>
