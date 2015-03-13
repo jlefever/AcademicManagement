@@ -10,7 +10,9 @@
                 	<p>
                     <input type="submit" value="Change Role">
                     </p>
+                    <p>
                     <input type="submit" value="Browse Data">
+                    </p>
                     <input type="submit" value="Edit Data">
                     </div><!--/ lower-->
                 </form>
