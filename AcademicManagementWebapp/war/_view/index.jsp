@@ -1,7 +1,8 @@
 <!DOCTYPE html >
 <html >
-<head>
-<title>Login Page</title>
+	<head>
+		<title>Login Page</title>
+	</head>
 <style>      
 </style>
 </head>
@@ -9,11 +10,22 @@
   <!-- Begin Page Content -->
             <div id="container">
                 <form action="login_process.php" method="post">
-                    <label for="loginmsg" style="color:hsla(0,100%,50%,0.5); font-family:"Helvetica Neue",Helvetica,sans-serif;"><?php  echo @$_GET['msg'];?></label>
+                	<p>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username">
+                    </p>
+                    <p>
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password">
+                    </p>
+                    <p>
+                     <label for="password">Re-enter Password</label>
+                    <input type="password" id="password" name="password">
+                    </p>
+                    <p>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                    </p>
                     <div id="lower">
                     <input type="submit" value="Login">
                     </div><!--/ lower-->
