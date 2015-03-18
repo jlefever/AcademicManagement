@@ -32,7 +32,9 @@ public class Main {
 				break;
 			}
 		}
-
+		
+		keyboard.close();
+		
 		System.out.println("Shutting down...");
 		server.stop();
 		server.join();
