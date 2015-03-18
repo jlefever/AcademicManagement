@@ -9,10 +9,6 @@ public class User {
 	public User(){
 		
 	}
-	
-	public void Browse(){
-		
-	}
 
 	public String getUsername() {
 		return username;
