@@ -11,11 +11,11 @@ import edu.ycp.cs320.acadman.model.Year;
 public interface IDatabase {
 	public List<Year> retrieveYears();
 
-	public List<Program> retrievePrograms(Year year);
+	public List<Program> retrievePrograms(int yearId);
 
-	public List<Outcome> retrieveOutcomes(Program program);
+	public List<Outcome> retrieveOutcomes(int programId);
 
-	public List<Indicator> retrieveIndicators(Outcome outcome);
+	public List<Indicator> retrieveIndicators(int outcomeId);
 
-	public List<Measurement> retrieveMeasurement(Indicator indicator);
+	public List<Measurement> retrieveMeasurement(int indicatorId);
 }
