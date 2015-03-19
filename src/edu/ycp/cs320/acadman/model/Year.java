@@ -1,29 +1,32 @@
 package edu.ycp.cs320.acadman.model;
 
-import java.util.List;
-
 public class Year {
 
-	private int thisYear;
-	private List<Program> programs;
-	
-	public Year(){
-		
+	private int id;
+	private int year;
+
+	public Year() {
+
 	}
 
-	public int getThisYear() {
-		return thisYear;
+	public int getId() {
+		return id;
 	}
 
-	public void setThisYear(int thisYear) {
-		this.thisYear = thisYear;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public List<Program> getPrograms() {
-		return programs;
+	public int getYear() {
+		return year;
 	}
 
-	public void setPrograms(List<Program> programs) {
-		this.programs = programs;
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	@Override
+	public String toString() {
+		return "Year [id=" + id + ", year=" + year + "]";
 	}
 }

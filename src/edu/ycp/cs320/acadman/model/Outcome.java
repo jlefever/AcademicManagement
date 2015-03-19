@@ -1,15 +1,31 @@
 package edu.ycp.cs320.acadman.model;
 
-import java.util.List;
-
 public class Outcome {
-	
+
+	private int id;
+	private String name;
 	private String description;
-	private List<Indicator> indicators;
 	private int minMet;
-	
-	public Outcome(){
-		
+	private int programId;
+
+	public Outcome() {
+
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -20,14 +36,6 @@ public class Outcome {
 		this.description = description;
 	}
 
-	public List<Indicator> getIndicators() {
-		return indicators;
-	}
-
-	public void setIndicators(List<Indicator> indicators) {
-		this.indicators = indicators;
-	}
-
 	public int getMinMet() {
 		return minMet;
 	}
@@ -35,4 +43,20 @@ public class Outcome {
 	public void setMinMet(int minMet) {
 		this.minMet = minMet;
 	}
+
+	public int getProgramId() {
+		return programId;
+	}
+
+	public void setProgramId(int programId) {
+		this.programId = programId;
+	}
+
+	@Override
+	public String toString() {
+		return "Outcome [id=" + id + ", name=" + name + ", description="
+				+ description + ", minMet=" + minMet + ", programId="
+				+ programId + "]";
+	}
+
 }

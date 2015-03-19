@@ -1,14 +1,22 @@
 package edu.ycp.cs320.acadman.model;
 
-import java.util.List;
-
 public class Program {
-	
+
+	private int id;
 	private String name;
-	private List<Outcome> outcomes;
-	
-	public Program(){
-		
+	private String description;
+	private int yearId;
+
+	public Program() {
+
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -19,11 +27,26 @@ public class Program {
 		this.name = name;
 	}
 
-	public List<Outcome> getOutcomes() {
-		return outcomes;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setOutcomes(List<Outcome> outcomes) {
-		this.outcomes = outcomes;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+	public int getYearId() {
+		return yearId;
+	}
+
+	public void setYearId(int yearId) {
+		this.yearId = yearId;
+	}
+
+	@Override
+	public String toString() {
+		return "Program [id=" + id + ", name=" + name + ", description="
+				+ description + ", yearId=" + yearId + "]";
+	}
+
 }
