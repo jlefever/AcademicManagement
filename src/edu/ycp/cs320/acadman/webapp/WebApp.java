@@ -26,14 +26,16 @@ public class WebApp {
 		// Wait for the user to type "quit"
 		System.out.println("Web server started, type quit to shut down");
 		Scanner keyboard = new Scanner(System.in);
-		while (keyboard.hasNextLine()) {
-			String line = keyboard.nextLine();
-			if (line.trim().toLowerCase().equals("quit")) {
-				break;
+		try {
+			while (keyboard.hasNextLine()) {
+				String line = keyboard.nextLine();
+				if (line.trim().toLowerCase().equals("quit")) {
+					break;
+				}
 			}
+		} finally {
+			keyboard.close();
 		}
-		
-		keyboard.close();
 		
 		System.out.println("Shutting down...");
 		server.stop();
