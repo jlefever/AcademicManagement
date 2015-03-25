@@ -17,5 +17,15 @@ public interface IDatabase {
 
 	public List<Indicator> retrieveIndicators(int outcomeId);
 
-	public List<Measurement> retrieveMeasurement(int indicatorId);
+	public List<Measurement> retrieveMeasurements(int indicatorId);
+	
+	public void addYear(int year);
+	
+	public void addProgram(String name, String description, int yearId);
+	
+	public void addOutcome(String name, String description, int minMet, int programId);
+	
+	public void addIndicator(String name, String description, int minMet, int outcomeId);
+	
+	public void addMeasurement(String name, String description, boolean isMet, int indicatorId);
 }

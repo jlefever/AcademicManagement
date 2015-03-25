@@ -17,6 +17,8 @@ public class FakeDatabase implements IDatabase {
 	private List<Outcome> outcomes;
 	private List<Indicator> indicators;
 	private List<Measurement> measurements;
+	
+	private int lastId;
 
 	public FakeDatabase() {
 		years = new ArrayList<Year>();
@@ -24,6 +26,8 @@ public class FakeDatabase implements IDatabase {
 		outcomes = new ArrayList<Outcome>();
 		indicators = new ArrayList<Indicator>();
 		measurements = new ArrayList<Measurement>();
+		
+		lastId = 0;
 	}
 
 	public void readInitialData() {
@@ -77,7 +81,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public List<Measurement> retrieveMeasurement(int indicatorId) {
+	public List<Measurement> retrieveMeasurements(int indicatorId) {
 		List<Measurement> result = new ArrayList<Measurement>();
 		for (Measurement x : measurements) {
 			if (x.getIndicatorId() == indicatorId) {
@@ -85,5 +89,64 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void addYear(int year) {
+		lastId += 1;
+		Year x = new Year();
+		x.setId(lastId);
+		x.setYear(year);
+		years.add(x);
+	}
+
+	@Override
+	public void addProgram(String name, String description, int yearId) {
+		lastId += 1;
+		Program p = new Program();
+		p.setId(lastId);
+		p.setName(name);
+		p.setDescription(description);
+		p.setYearId(yearId);
+		programs.add(p);
+	}
+
+	@Override
+	public void addOutcome(String name, String description, int minMet,
+			int programId) {
+		lastId += 1;
+		Outcome o = new Outcome();
+		o.setId(lastId);
+		o.setName(name);
+		o.setDescription(description);
+		o.setMinMet(minMet);
+		o.setProgramId(programId);
+		outcomes.add(o);
+	}
+
+	@Override
+	public void addIndicator(String name, String description, int minMet,
+			int outcomeId) {
+		lastId += 1;
+		Indicator i = new Indicator();
+		i.setId(lastId);
+		i.setName(name);
+		i.setDescription(description);
+		i.setMinMet(minMet);
+		i.setOutcomeId(outcomeId);
+		indicators.add(i);
+	}
+
+	@Override
+	public void addMeasurement(String name, String description, boolean isMet,
+			int indicatorId) {
+		lastId += 1;
+		Measurement m = new Measurement();
+		m.setId(lastId);
+		m.setName(name);
+		m.setDescription(description);
+		m.setMet(isMet);
+		m.setIndicatorId(indicatorId);
+		measurements.add(m);
 	}
 }
