@@ -9,6 +9,9 @@ import edu.ycp.cs320.acadman.model.Program;
 import edu.ycp.cs320.acadman.model.Year;
 
 public interface IDatabase {
+	
+	public void readInitialData();
+	
 	public List<Year> retrieveYears();
 
 	public List<Program> retrievePrograms(int yearId);
