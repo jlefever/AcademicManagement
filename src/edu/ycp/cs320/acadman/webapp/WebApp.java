@@ -6,6 +6,10 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import edu.ycp.cs320.acadman.persist.DatabaseProvider;
+import edu.ycp.cs320.acadman.persist.FakeDatabase;
+import edu.ycp.cs320.acadman.persist.IDatabase;
+
 public class WebApp {
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8081);
@@ -22,7 +26,12 @@ public class WebApp {
 
 		// Start the server
 		server.start();
-
+		
+		// Database
+		IDatabase db = new FakeDatabase();
+		db.readInitialData();
+		DatabaseProvider.setInstance(db);
+		
 		// Wait for the user to type "quit"
 		System.out.println("Web server started, type quit to shut down");
 		Scanner keyboard = new Scanner(System.in);

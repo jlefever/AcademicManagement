@@ -11,9 +11,18 @@
     <servlet-class>edu.ycp.cs320.acadman.webapp.servlets.IndexServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>DataViewServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.acadman.webapp.servlets.DataViewServlet</servlet-class>
+  </servlet>
+
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DataViewServlet</servlet-name>
+    <url-pattern>/DataView</url-pattern>
   </servlet-mapping>
 </web-app>
