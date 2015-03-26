@@ -12,7 +12,7 @@ import edu.ycp.cs320.acadman.model.Program;
 import edu.ycp.cs320.acadman.model.Year;
 
 public class InitialData {
-	public static List<Year> getYears() throws IOException {
+	public static List<Year> readYears() throws IOException {
 		List<Year> yearList = new ArrayList<Year>();
 		ReadCSV readYears = new ReadCSV("initial_years.csv");
 		
@@ -33,7 +33,7 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Program> getPrograms() throws IOException {
+	public static List<Program> readPrograms() throws IOException {
 		List<Program> list = new ArrayList<Program>();
 		ReadCSV read = new ReadCSV("initial_programs.csv");
 		
@@ -56,7 +56,7 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Outcome> getOutcomes() throws IOException {
+	public static List<Outcome> readOutcomes() throws IOException {
 		List<Outcome> list = new ArrayList<Outcome>();
 		ReadCSV read = new ReadCSV("initial_outcomes.csv");
 		
@@ -80,7 +80,7 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Indicator> getIndicators() throws IOException {
+	public static List<Indicator> readIndicators() throws IOException {
 		List<Indicator> list = new ArrayList<Indicator>();
 		ReadCSV read = new ReadCSV("initial_indicators.csv");
 		
@@ -104,7 +104,7 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Measurement> getMeasurements() throws IOException {
+	public static List<Measurement> readMeasurements() throws IOException {
 		List<Measurement> list = new ArrayList<Measurement>();
 		ReadCSV read = new ReadCSV("initial_measurements.csv");
 		

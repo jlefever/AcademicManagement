@@ -1,4 +1,4 @@
-package edu.ycp.cs320.acadman.controllers;
+package edu.ycp.cs320.acadman.controller;
 
 import java.util.List;
 

@@ -32,11 +32,11 @@ public class FakeDatabase implements IDatabase {
 
 	public void readInitialData() {
 		try {
-			years.addAll(InitialData.getYears());
-			programs.addAll(InitialData.getPrograms());
-			outcomes.addAll(InitialData.getOutcomes());
-			indicators.addAll(InitialData.getIndicators());
-			measurements.addAll(InitialData.getMeasurements());
+			years.addAll(InitialData.readYears());
+			programs.addAll(InitialData.readPrograms());
+			outcomes.addAll(InitialData.readOutcomes());
+			indicators.addAll(InitialData.readIndicators());
+			measurements.addAll(InitialData.readMeasurements());
 		} catch (IOException e) {
 			throw new IllegalStateException("Could not read initial data", e);
 		}
