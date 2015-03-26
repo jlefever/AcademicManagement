@@ -29,9 +29,15 @@ public class DataViewServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		// Decode form parameters and dispatch to controller
+			int year = Integer.parseInt(req.getParameter("year"));			
+			Controller.addYear(year);
+	
 		
+		List<Year> years = Controller.getYears();
 		
-		
+		req.setAttribute("years", years);
+
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/DataView.jsp").forward(req, resp);
 	}

@@ -10,7 +10,7 @@
   <!-- Begin Page Content -->
             <div id="container">
                 <form action="login_process.php" method="post">
-               		 <p>
+               		<p>
                     <label for="Intsitution">Institution:</label>
                     <input type="text" id="Institution" name="Institution">
                     </p>

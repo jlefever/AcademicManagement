@@ -17,5 +17,11 @@
 		</tr>
 	</c:forEach>
 	</table>
+	<form action="${pageContext.servletContext.contextPath}/DataView" method="post">
+		<p>
+     	<label class="AddYear">Add Year:</label>
+     	<input type="text" name="year" size="12" value="${year}">
+	</form>
+	
 </body>
 </html>
