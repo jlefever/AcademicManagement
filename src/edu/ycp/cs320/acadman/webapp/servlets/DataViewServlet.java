@@ -19,24 +19,30 @@ public class DataViewServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("In the DavaView servlet");
-		
+
 		List<Year> years = Controller.getYears();
-		
+
 		req.setAttribute("years", years);
 		req.getRequestDispatcher("/_view/DataView.jsp").forward(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// Decode form parameters and dispatch to controller
-			int year = Integer.parseInt(req.getParameter("year"));			
-			Controller.addYear(year);
-	
-		
+		String errorMessage = null;
+			try {
+				int year = Integer.parseInt(req.getParameter("year"));
+
+				Controller.addYear(year);
+			}
+			catch (NumberFormatException e) {
+			errorMessage = "Invalid Year";
+			}
 		List<Year> years = Controller.getYears();
-		
+
 		req.setAttribute("years", years);
+		req.setAttribute("errorMessage", errorMessage);
 
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/DataView.jsp").forward(req, resp);

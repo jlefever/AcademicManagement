@@ -27,7 +27,7 @@ public class FakeDatabase implements IDatabase {
 		indicators = new ArrayList<Indicator>();
 		measurements = new ArrayList<Measurement>();
 		
-		lastId = 0;
+		lastId = 3;
 	}
 
 	public void readInitialData() {
