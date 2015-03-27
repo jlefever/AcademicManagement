@@ -22,6 +22,8 @@
      	<label class="AddYear">Add Year:</label>
      	<input type="text" name="year" size="12" value="${year}">
 	</form>
-	
+	<c:if test="${! empty errorMessage}">
+		<div class="error">${errorMessage}</div>
+	</c:if>	
 </body>
 </html>
