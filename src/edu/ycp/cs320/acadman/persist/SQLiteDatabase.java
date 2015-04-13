@@ -11,10 +11,6 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
-import edu.ycp.cs320.acadman.model.Year;
-
-
-
 
 public class SQLiteDatabase implements IDatabase {
 	static {
@@ -75,7 +71,9 @@ public class SQLiteDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+		String home = System.getProperty("user.home");
+		
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:" + home + "/assessment.db");
 		
 		// Set auto commit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -87,12 +85,6 @@ public class SQLiteDatabase implements IDatabase {
 	public void readInitialData() {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public List<Year> retrieveYears() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -117,12 +109,6 @@ public class SQLiteDatabase implements IDatabase {
 	public List<Measurement> retrieveMeasurements(int indicatorId) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void addYear(int year) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

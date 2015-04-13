@@ -5,7 +5,7 @@ public class Program {
 	private int id;
 	private String name;
 	private String description;
-	private int yearId;
+	private int year;
 
 	public Program() {
 
@@ -15,7 +15,7 @@ public class Program {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.yearId = yearId;
+		this.year = yearId;
 	}
 
 	public int getId() {
@@ -43,17 +43,17 @@ public class Program {
 	}
 
 	public int getYearId() {
-		return yearId;
+		return year;
 	}
 
 	public void setYearId(int yearId) {
-		this.yearId = yearId;
+		this.year = yearId;
 	}
 
 	@Override
 	public String toString() {
 		return "Program [id=" + id + ", name=" + name + ", description="
-				+ description + ", yearId=" + yearId + "]";
+				+ description + ", yearId=" + year + "]";
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class Program {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + yearId;
+		result = prime * result + year;
 		return result;
 	}
 
@@ -89,7 +89,7 @@ public class Program {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (yearId != other.yearId)
+		if (year != other.year)
 			return false;
 		return true;
 	}

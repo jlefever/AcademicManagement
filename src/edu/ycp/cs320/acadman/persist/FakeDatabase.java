@@ -8,11 +8,9 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
-import edu.ycp.cs320.acadman.model.Year;
 
 public class FakeDatabase implements IDatabase {
 
-	private List<Year> years;
 	private List<Program> programs;
 	private List<Outcome> outcomes;
 	private List<Indicator> indicators;
@@ -21,7 +19,6 @@ public class FakeDatabase implements IDatabase {
 	private int lastId;
 
 	public FakeDatabase() {
-		years = new ArrayList<Year>();
 		programs = new ArrayList<Program>();
 		outcomes = new ArrayList<Outcome>();
 		indicators = new ArrayList<Indicator>();
@@ -32,7 +29,6 @@ public class FakeDatabase implements IDatabase {
 
 	public void readInitialData() {
 		try {
-			years.addAll(InitialData.readYears());
 			programs.addAll(InitialData.readPrograms());
 			outcomes.addAll(InitialData.readOutcomes());
 			indicators.addAll(InitialData.readIndicators());
@@ -40,11 +36,6 @@ public class FakeDatabase implements IDatabase {
 		} catch (IOException e) {
 			throw new IllegalStateException("Could not read initial data", e);
 		}
-	}
-
-	@Override
-	public List<Year> retrieveYears() {
-		return years;
 	}
 
 	@Override
@@ -89,15 +80,6 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 		return result;
-	}
-
-	@Override
-	public void addYear(int year) {
-		lastId += 1;
-		Year x = new Year();
-		x.setId(lastId);
-		x.setYear(year);
-		years.add(x);
 	}
 
 	@Override
