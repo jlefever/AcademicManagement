@@ -162,41 +162,41 @@ public class SQLiteDatabase implements IDatabase {
 					
 					try {
 						stmt1 = conn.prepareStatement(
-								"create table programs(" +
+								"create table Programs(" +
 								"    id integer primary key," +
 								"    name varchar(200)," +
-								"    description varchar(2000)" +
-								"    year integer," +
+								"    description varchar(2000)," +
+								"    year integer" +
 								")");
 						stmt1.executeUpdate();
 						
 						stmt2 = conn.prepareStatement(
-								"create table outcomes(" +
+								"create table Outcomes(" +
 								"    id integer primary key," +
 								"    name varchar(200)," +
-								"    description varchar(2000)" +
+								"    description varchar(2000)," +
 								"    program_id integer," +
-								"    min_met integer," +
+								"    min_met integer" +
 								")");
 						stmt2.executeUpdate();
 						
 						stmt3 = conn.prepareStatement(
-								"create table indicators(" +
+								"create table Indicators(" +
 								"    id integer primary key," +
 								"    name varchar(200)," +
-								"    description varchar(2000)" +
+								"    description varchar(2000)," +
 								"    outcome_id integer," +
-								"    min_met integer," +
+								"    min_met integer" +
 								")");
 						stmt3.executeUpdate();
 						
 						stmt4 = conn.prepareStatement(
-								"create table measurement(" +
+								"create table Measurements(" +
 								"    id integer primary key," +
 								"    name varchar(200)," +
-								"    description varchar(2000)" +
+								"    description varchar(2000)," +
 								"    indicator_id integer," +
-								"    met boolean," +
+								"    met boolean" +
 								")");
 						stmt4.executeUpdate();
 						
@@ -235,11 +235,12 @@ public class SQLiteDatabase implements IDatabase {
 					PreparedStatement insertMeasurement = null;
 
 					try {
-						insertProgram = conn.prepareStatement("insert into Programs values (?, ?, ?)");
+						insertProgram = conn.prepareStatement("insert into Programs values (?, ?, ?, ?)");
 						for (Program program : ProgramList) {
 							insertProgram.setInt(1, program.getId());
 							insertProgram.setString(2, program.getName());
 							insertProgram.setString(3, program.getDescription());
+							insertProgram.setInt(4, program.getYearId());
 							insertProgram.addBatch();
 						}
 						insertProgram.executeBatch();
@@ -255,7 +256,7 @@ public class SQLiteDatabase implements IDatabase {
 						}
 						insertOutcome.executeBatch();
 						
-						insertIndicator = conn.prepareStatement("insert into Idicator values (?, ?, ?, ?,?)");
+						insertIndicator = conn.prepareStatement("insert into Indicators values (?, ?, ?, ?,?)");
 						for (Indicator indicator : IndicatorList) {
 							insertIndicator.setInt(1, indicator.getId());
 							insertIndicator.setInt(2, indicator.getOutcomeId());
@@ -266,7 +267,7 @@ public class SQLiteDatabase implements IDatabase {
 						}
 						insertIndicator.executeBatch();
 						
-						insertMeasurement = conn.prepareStatement("insert into measurement values (?, ?, ?, ?,?)");
+						insertMeasurement = conn.prepareStatement("insert into Measurements values (?, ?, ?, ?,?)");
 						for (Measurement measurement : MeasurementList) {
 							insertMeasurement.setInt(1, measurement.getId());
 							insertMeasurement.setInt(2, measurement.getIndicatorId());
