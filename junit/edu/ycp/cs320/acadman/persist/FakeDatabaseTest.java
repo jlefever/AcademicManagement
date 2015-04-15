@@ -79,4 +79,66 @@ public class FakeDatabaseTest {
 			assertTrue(actual.contains(y));
 		}
 	}
+	
+	@Test
+	public void testDeleteProgram(){
+		List<Program> desired = new ArrayList<Program>();
+		desired.add(new Program(1,"Computer Science","Science with computers (also math)",3));
+		
+		db.deleteProgram(2);
+		
+		List<Program> actual = db.retrievePrograms(3);
+				
+		assertTrue(desired.size() == actual.size());
+		
+		for (Program y : desired){
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testDeleteOutcome(){
+		List<Outcome> desired = new ArrayList<Outcome>();
+		desired.add(new Outcome(1,"An ability to function effectively on teams","description",2,1));
+		
+		db.deleteOutcome(2);
+		
+		List<Outcome> actual = db.retrieveOutcomes(1);
+				
+		assertTrue(desired.size() == actual.size());
+		
+		for (Outcome y : desired){
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testDeleteIndicator(){
+		List<Indicator> desired = new ArrayList<Indicator>();
+		
+		db.deleteIndicator(1);
+		
+		List<Indicator> actual = db.retrieveIndicators(1);
+				
+		assertTrue(desired.size() == actual.size());
+		
+		for (Indicator y : desired){
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testDeleteMeasurement(){
+		List<Measurement> desired = new ArrayList<Measurement>();
+		
+		db.deleteMeasurement(1);
+		
+		List<Measurement> actual = db.retrieveMeasurements(1);
+				
+		assertTrue(desired.size() == actual.size());
+		
+		for (Measurement y : desired){
+			assertTrue(actual.contains(y));
+		}
+	}
 }

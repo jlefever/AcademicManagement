@@ -10,7 +10,7 @@ import edu.ycp.cs320.acadman.model.Program;
 public interface IDatabase {
 	
 	public void readInitialData();
-
+	
 	public List<Program> retrievePrograms(int yearId);
 
 	public List<Outcome> retrieveOutcomes(int programId);
@@ -19,11 +19,27 @@ public interface IDatabase {
 
 	public List<Measurement> retrieveMeasurements(int indicatorId);
 	
-	public void addProgram(String name, String description, int yearId);
+	public Program addProgram(String name, String description, int yearId);
 	
-	public void addOutcome(String name, String description, int minMet, int programId);
+	public Outcome addOutcome(String name, String description, int minMet, int programId);
 	
-	public void addIndicator(String name, String description, int minMet, int outcomeId);
+	public Indicator addIndicator(String name, String description, int minMet, int outcomeId);
 	
-	public void addMeasurement(String name, String description, boolean isMet, int indicatorId);
+	public Measurement addMeasurement(String name, String description, boolean isMet, int indicatorId);
+	
+	public void deleteProgram(int id);
+	
+	public void deleteOutcome(int id);
+	
+	public void deleteIndicator(int id);
+	
+	public void deleteMeasurement(int id);
+	
+	public Program editProgram(int id, String name, String description, int yearId);
+	
+	public Outcome editOutcome(int id, String name, String description, int minMet, int programId);
+	
+	public Indicator editIndicator(int id, String name, String description, int minMet, int outcomeId);
+	
+	public Measurement editMeasurement(int id, String name, String description, boolean isMet, int indicatorId);
 }
