@@ -1,4 +1,4 @@
-package edu.ycp.cs320.acadman.webapp.servlets;
+/*package edu.ycp.cs320.acadman.webapp.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,4 +47,4 @@ public class DataViewServlet extends HttpServlet {
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/DataView.jsp").forward(req, resp);
 	}
-}
+}*/

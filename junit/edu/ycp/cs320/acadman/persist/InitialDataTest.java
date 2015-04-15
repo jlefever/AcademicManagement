@@ -12,24 +12,8 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
-import edu.ycp.cs320.acadman.model.Year;
 
 public class InitialDataTest {
-	@Test
-	public void testReadYears() throws IOException{
-		List<Year> desired = new ArrayList<Year>();
-		desired.add(new Year(1, 2013));
-		desired.add(new Year(2, 2014));
-		desired.add(new Year(3, 2015));
-		
-		List<Year> actual = InitialData.readYears();
-		
-		assertTrue(desired.size() == actual.size());
-		
-		for (Year y : desired) {
-			assertTrue(actual.contains(y));
-		}
-	}
 	
 	@Test
 	public void testReadPrograms() throws IOException{

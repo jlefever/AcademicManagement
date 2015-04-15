@@ -9,30 +9,8 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
-import edu.ycp.cs320.acadman.model.Year;
 
 public class InitialData {
-	public static List<Year> readYears() throws IOException {
-		List<Year> yearList = new ArrayList<Year>();
-		ReadCSV readYears = new ReadCSV("initial_years.csv");
-		
-		try {
-			while(true) {
-				List<String> tuple = readYears.next();
-				if (tuple == null) break;	
-				Iterator<String> i = tuple.iterator();
-			
-				Year year = new Year();
-				year.setId(Integer.parseInt(i.next()));
-				year.setYear(Integer.parseInt(i.next()));
-				yearList.add(year);
-			}
-			return yearList;
-		} finally {
-			readYears.close();
-		}
-	}
-	
 	public static List<Program> readPrograms() throws IOException {
 		List<Program> list = new ArrayList<Program>();
 		ReadCSV read = new ReadCSV("initial_programs.csv");

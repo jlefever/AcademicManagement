@@ -6,16 +6,10 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
-import edu.ycp.cs320.acadman.model.Year;
 import edu.ycp.cs320.acadman.persist.DatabaseProvider;
 import edu.ycp.cs320.acadman.persist.IDatabase;
 
 public class Controller {
-	public static List<Year> getYears() {
-		IDatabase db = DatabaseProvider.getInstance();
-		return db.retrieveYears();
-	}
-	
 	public static List<Program> getPrograms(int yearId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrievePrograms(yearId);
@@ -34,11 +28,6 @@ public class Controller {
 	public static List<Measurement> getMeasurements(int indicatorId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveMeasurements(indicatorId);
-	}
-	
-	public static void addYear(int year) {
-		IDatabase db = DatabaseProvider.getInstance();
-		db.addYear(year);
 	}
 	
 	public static void addProgram(String name, String description, int yearId) {
