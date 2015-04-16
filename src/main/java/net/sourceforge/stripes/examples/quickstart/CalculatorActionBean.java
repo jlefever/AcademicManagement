@@ -35,7 +35,7 @@ public class CalculatorActionBean implements ActionBean {
     /** An event handler method that adds number one to number two. */
     @DefaultHandler
     public Resolution addition() {
-        result = numberOne + numberTwo;
+		result = numberOne + numberTwo;
         return new ForwardResolution("/quickstart/index.jsp");
     }
 

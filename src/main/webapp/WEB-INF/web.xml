@@ -10,7 +10,13 @@
       Stripes Examples
     </description>
     <display-name>Stripes Examples</display-name>
-
+    
+    <listener>
+	<listener-class>
+             edu.ycp.cs320.acadman.view.MyAppServletContextListener 
+        </listener-class>
+   </listener>
+    
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!--              Configuration of the Stripes Filter.                   -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
