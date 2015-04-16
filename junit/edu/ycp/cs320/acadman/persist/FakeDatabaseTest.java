@@ -15,7 +15,7 @@ import edu.ycp.cs320.acadman.model.Program;
 
 public class FakeDatabaseTest {
 	
-	IDatabase db;
+	FakeDatabase db;
 	@Before
 	public void setup(){
 		db = new FakeDatabase();

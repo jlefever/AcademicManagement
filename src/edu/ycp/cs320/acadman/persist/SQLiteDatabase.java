@@ -90,11 +90,6 @@ public class SQLiteDatabase implements IDatabase {
 	}
 
 	@Override
-	public void readInitialData() {
-
-	}
-
-	@Override
 	public List<Program> retrievePrograms(final int yearId) {
 		return executeTransaction(new Transaction<List<Program>>() {
 			@Override
