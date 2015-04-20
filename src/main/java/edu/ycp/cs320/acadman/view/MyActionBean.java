@@ -9,6 +9,7 @@ import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
+
 public class MyActionBean implements ActionBean{
 	
 	private ActionBeanContext context;

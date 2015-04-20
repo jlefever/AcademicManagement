@@ -1,21 +1,13 @@
-package net.sourceforge.stripes.examples.bugzooky;
+package edu.ycp.cs320.acadman.view;
 
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.examples.bugzooky.biz.Person;
-import net.sourceforge.stripes.examples.bugzooky.biz.PersonManager;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationError;
 
-/**
- * An example of an ActionBean that uses validation annotations on fields instead of
- * on methods.  Logs the user in using a conventional username/password combo and
- * validates the password in the action method.
- *
- * @author Tim Fennell
- */
-public class LoginActionBean extends BugzookyActionBean {
+
+public class LoginActionBean extends MyActionBean {
     @Validate(required=true)
     private String username;
 
@@ -59,7 +51,6 @@ public class LoginActionBean extends BugzookyActionBean {
         else {
             getContext().setUser(person);
             if (this.targetUrl != null) {
-            	System.out.println(this.targetUrl);
                 return new RedirectResolution(this.targetUrl);
             }
             else {
