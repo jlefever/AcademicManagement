@@ -2,12 +2,14 @@ package edu.ycp.cs320.acadman.persist;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public class FakeDatabase implements IDatabase {
 
@@ -15,6 +17,7 @@ public class FakeDatabase implements IDatabase {
 	private List<Outcome> outcomes;
 	private List<Indicator> indicators;
 	private List<Measurement> measurements;
+	private List<User> users;
 	
 	private int lastId;
 
@@ -23,6 +26,7 @@ public class FakeDatabase implements IDatabase {
 		outcomes = new ArrayList<Outcome>();
 		indicators = new ArrayList<Indicator>();
 		measurements = new ArrayList<Measurement>();
+		users = new ArrayList<User>();
 		
 		lastId = 3;
 	}
@@ -183,6 +187,7 @@ public class FakeDatabase implements IDatabase {
 			if(i.getId() == id)
 			{
 				toremove = i;
+				break;
 			}
 		}
 		measurements.remove(toremove);
@@ -250,6 +255,54 @@ public class FakeDatabase implements IDatabase {
 				i.setMet(isMet);
 				i.setIndicatorId(indicatorId);
 				edited = i;
+			}
+		}
+		return edited;
+	}
+	
+	// Users
+	
+	@Override
+	public User retrieveUser(String username) {
+		for (User x : users) {
+			if (x.getUsername() == username) {
+				return x;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void addUser(String username, String email, String password) {
+		User x = new User();
+		x.setUsername(username);
+		x.setEmail(email);
+		x.setPassword(password);
+		users.add(x);
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		Iterator<User> i = users.iterator();
+		while (i.hasNext()) {
+			User x = i.next();
+			if (x.getUsername().equals(username)) {
+				i.remove();
+				return;
+			}
+		}
+	}
+
+	@Override
+	public User editUser(String username, String password, String email) {
+		User edited = new User();
+		for(User x : users)
+		{
+			if(x.getUsername().equals(username)) {
+				x.setUsername(username);
+				x.setPassword(password);
+				x.setEmail(email);
+				edited = x;
 			}
 		}
 		return edited;

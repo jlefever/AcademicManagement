@@ -13,6 +13,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public class SQLiteDatabase implements IDatabase {
 	static {
@@ -829,6 +830,30 @@ public class SQLiteDatabase implements IDatabase {
 				}
 			}
 		});
+	}
+
+	@Override
+	public User retrieveUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addUser(String username, String email, String password) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User editUser(String username, String password, String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

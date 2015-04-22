@@ -49,4 +49,26 @@ public class Controller {
 		IDatabase db = DatabaseProvider.getInstance();
 		db.addMeasurement(name, description, isMet, indicatorId);
 	}
+	
+	// Users
+	
+	public static void addUser(String username, String email, String password) {
+		IDatabase db = DatabaseProvider.getInstance();
+		db.addUser(username, email, password);
+	}
+	
+	public static void deleteUser(String username) {
+		IDatabase db = DatabaseProvider.getInstance();
+		db.deleteUser(username);
+	}
+	
+	public static void editUser(String username, String email, String password) {
+		IDatabase db = DatabaseProvider.getInstance();
+		db.editUser(username, password, email);
+	}
+	
+	public static void getUser(String username) {
+		IDatabase db = DatabaseProvider.getInstance();
+		db.retrieveUser(username);
+	}
 }

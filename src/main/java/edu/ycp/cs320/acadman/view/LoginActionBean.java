@@ -35,7 +35,6 @@ public class LoginActionBean extends MyActionBean {
     public void setTargetUrl(String targetUrl) { this.targetUrl = targetUrl; }
     
     public Resolution login() {
-        PersonManager pm = new PersonManager();
         Person person = pm.getPerson(this.username);
 
         if (person == null) {

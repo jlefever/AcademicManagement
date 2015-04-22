@@ -6,6 +6,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public interface IDatabase {
 	
@@ -40,4 +41,14 @@ public interface IDatabase {
 	public Indicator editIndicator(int id, String name, String description, int minMet, int outcomeId);
 	
 	public Measurement editMeasurement(int id, String name, String description, boolean isMet, int indicatorId);
+	
+	// Users
+	
+	public User retrieveUser(String username);
+	
+	public void addUser(String username, String email, String password);
+	
+	public void deleteUser(String username);
+	
+	public User editUser(String username, String password, String email);
 }
