@@ -937,32 +937,38 @@ public class SQLiteDatabase implements IDatabase {
 
 	@Override
 	public User addUser(final String username, final String email, final String password){
-		return executeTransaction(new Transaction<User>() {
-			@Override
-			public User execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				try {
+		if(this.retrieveUser(username) == null)
+		{
+			return executeTransaction(new Transaction<User>() {
+				@Override
+				public User execute(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					try {
 
-					stmt = conn.prepareStatement(
-							"insert into Users values (?, ?, ?)"
-					);
+						stmt = conn.prepareStatement(
+								"insert into Users values (?, ?, ?)"
+						);
 
 					
-					stmt.setString(1, username);
-					stmt.setString(2, email);
-					stmt.setString(3, password);
+						stmt.setString(1, username);
+						stmt.setString(2, email);
+						stmt.setString(3, password);
 
-					stmt.executeUpdate();
+						stmt.executeUpdate();
 					
-					return new User(username, email, password);
-				}
+						return new User(username, email, password);
+					}
 
-				finally {
-					DBUtil.closeQuietly(stmt);
-				}
+					finally {
+						DBUtil.closeQuietly(stmt);
+					}
 
-			}
-		});
+				}
+			});
+		}
+		else{
+			return null;
+		}
 	}
 
 	@Override

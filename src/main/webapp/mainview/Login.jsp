@@ -15,7 +15,7 @@
 						<td style="font-weight: bold;"><stripes:label for="username" />:</td>
 					</tr>
 					<tr>
-						<td><stripes:text name="username" value="${user.username}" /></td>
+						<td><stripes:text name="username" /></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><stripes:label for="password" />:</td>

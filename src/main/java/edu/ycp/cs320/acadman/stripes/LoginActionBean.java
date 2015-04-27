@@ -29,7 +29,7 @@ public class LoginActionBean extends MyActionBean {
 
     /** The password of the user trying to log in. */
     public String getPassword() { return password; }
-
+    
     /** The URL the user was trying to access (null if the login page was accessed directly). */
     public String getTargetUrl() { return targetUrl; }
 
