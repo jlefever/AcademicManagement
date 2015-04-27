@@ -9,6 +9,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public class InitialData {
 	public static List<Program> readPrograms() throws IOException {
@@ -98,6 +99,28 @@ public class InitialData {
 				thing.setDescription(i.next());
 				thing.setMet(Boolean.parseBoolean(i.next()));
 				thing.setIndicatorId(Integer.parseInt(i.next()));
+				list.add(thing);
+			}
+			return list;
+		} finally {
+			read.close();
+		}
+	}
+	
+	public static List<User> readUsers() throws IOException {
+		List<User> list = new ArrayList<User>();
+		ReadCSV read = new ReadCSV("initial_users.csv");
+		
+		try {
+			while(true) {
+				List<String> tuple = read.next();
+				if (tuple == null) break;	
+				Iterator<String> i = tuple.iterator();
+			
+				User thing = new User();
+				thing.setUsername(i.next());
+				thing.setEmail(i.next());
+				thing.setPassword(i.next());
 				list.add(thing);
 			}
 			return list;

@@ -10,6 +10,8 @@ import edu.ycp.cs320.acadman.model.User;
 
 public interface IDatabase {
 	
+	public void Setup();
+	
 	public List<Program> retrievePrograms(int yearId);
 
 	public List<Outcome> retrieveOutcomes(int programId);
@@ -44,9 +46,11 @@ public interface IDatabase {
 	
 	// Users
 	
+	public List<User> retrieveUsers();
+	
 	public User retrieveUser(String username);
 	
-	public void addUser(String username, String email, String password);
+	public User addUser(String username, String email, String password);
 	
 	public void deleteUser(String username);
 	

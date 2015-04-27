@@ -427,6 +427,12 @@ public class SQLiteDatabase implements IDatabase {
 		measurement.setMet(resultSet.getBoolean(index++));
 	}
 	
+	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
+		user.setUsername(resultSet.getString(index++));
+		user.setEmail(resultSet.getString(index++));
+		user.setPassword(resultSet.getString(index++));
+	}
+	
 	@Override
 	public void deleteProgram(final int id) {
 		executeTransaction(new Transaction<Boolean>() {
@@ -670,6 +676,13 @@ public class SQLiteDatabase implements IDatabase {
 		});
 	}
 	
+	
+	@Override
+	public void Setup(){
+		this.createTables();
+		this.loadInitialData();
+	}
+	
 	// The main method creates the database tables and loads the initial data.
 	public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
@@ -679,16 +692,17 @@ public class SQLiteDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		
-		for (Program i : db.retrievePrograms(3)){
+		for (User i : db.retrieveUsers()){
 			System.out.println(i);
 		}
 		
-		db.editProgram(1, "edited", "new descript", 3);
+		db.addUser("Dave", "dav5037", "iamdave");
 		
-		for (Program i : db.retrievePrograms(3)){
+		for (User i : db.retrieveUsers()){
 			System.out.println(i);
 		}
 		
+		System.out.println(db.retrieveUser("Dave"));
 		System.out.println("Success!");
 	}
 
@@ -700,6 +714,7 @@ public class SQLiteDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
 
 				try {
 					stmt1 = conn.prepareStatement("create table Programs("
@@ -735,6 +750,13 @@ public class SQLiteDatabase implements IDatabase {
 							+ "    met boolean"
 							+ ")");
 					stmt4.executeUpdate();
+					
+					stmt5 = conn.prepareStatement("create table Users("
+							+ "    username varchar(200) primary key,"
+							+ "    email varchar(2000),"
+							+ "    password varchar(200)"
+							+ ")");
+					stmt5.executeUpdate();
 
 					return true;
 				} finally {
@@ -742,6 +764,7 @@ public class SQLiteDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
 				}
 			}
 		});
@@ -755,12 +778,14 @@ public class SQLiteDatabase implements IDatabase {
 				List<Outcome> OutcomeList;
 				List<Indicator> IndicatorList;
 				List<Measurement> MeasurementList;
+				List<User> UserList;
 
 				try {
 					ProgramList = InitialData.readPrograms();
 					OutcomeList = InitialData.readOutcomes();
 					IndicatorList = InitialData.readIndicators();
 					MeasurementList = InitialData.readMeasurements();
+					UserList = InitialData.readUsers();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -769,6 +794,7 @@ public class SQLiteDatabase implements IDatabase {
 				PreparedStatement insertOutcome = null;
 				PreparedStatement insertIndicator = null;
 				PreparedStatement insertMeasurement = null;
+				PreparedStatement insertUser = null;
 
 				try {
 					insertProgram = conn
@@ -782,8 +808,7 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertProgram.executeBatch();
 					// finish
-					insertOutcome = conn
-							.prepareStatement("insert into Outcomes values (?, ?, ?, ?,?)");
+					insertOutcome = conn.prepareStatement("insert into Outcomes values (?, ?, ?, ?,?)");
 					for (Outcome outcome : OutcomeList) {
 						insertOutcome.setInt(1, outcome.getId());
 						insertOutcome.setString(2, outcome.getName());
@@ -794,8 +819,7 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertOutcome.executeBatch();
 
-					insertIndicator = conn
-							.prepareStatement("insert into Indicators values (?, ?, ?, ?,?)");
+					insertIndicator = conn.prepareStatement("insert into Indicators values (?, ?, ?, ?,?)");
 					for (Indicator indicator : IndicatorList) {
 						insertIndicator.setInt(1, indicator.getId());
 						insertIndicator.setString(2, indicator.getName());
@@ -807,8 +831,7 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertIndicator.executeBatch();
 
-					insertMeasurement = conn
-							.prepareStatement("insert into Measurements values (?, ?, ?, ?,?)");
+					insertMeasurement = conn.prepareStatement("insert into Measurements values (?, ?, ?, ?,?)");
 					for (Measurement measurement : MeasurementList) {
 						insertMeasurement.setInt(1, measurement.getId());
 						insertMeasurement.setString(2, measurement.getName());
@@ -821,39 +844,184 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertMeasurement.executeBatch();
 
+					insertUser = conn.prepareStatement("insert into Users values (?,?,?)");
+					for (User user : UserList) {
+						insertUser.setString(1, user.getUsername());
+						insertUser.setString(2, user.getEmail());
+						insertUser.setString(3, user.getPassword());
+						insertUser.addBatch();
+					}
+					insertUser.executeBatch();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertProgram);
 					DBUtil.closeQuietly(insertOutcome);
 					DBUtil.closeQuietly(insertIndicator);
 					DBUtil.closeQuietly(insertMeasurement);
+					DBUtil.closeQuietly(insertUser);
 				}
 			}
 		});
 	}
 
 	@Override
-	public User retrieveUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> retrieveUsers() {
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from Users"
+					);
+					
+					List<User> result = new ArrayList<User>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while (resultSet.next()) {
+						User user = new User();
+						loadUser(user, resultSet, 1);
+						
+						result.add(user);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public User retrieveUser(final String username) {
+		return executeTransaction(new Transaction<User>() {
+			@Override
+			public User execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Users where username=?"	
+					);
+					
+					stmt.setString(1, username);
+					
+					User result = new User();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadUser(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+			}
+		});
 	}
 
 	@Override
-	public void addUser(String username, String email, String password) {
-		// TODO Auto-generated method stub
-		
+	public User addUser(final String username, final String email, final String password){
+		return executeTransaction(new Transaction<User>() {
+			@Override
+			public User execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
+
+					stmt = conn.prepareStatement(
+							"insert into Users values (?, ?, ?)"
+					);
+
+					
+					stmt.setString(1, username);
+					stmt.setString(2, email);
+					stmt.setString(3, password);
+
+					stmt.executeUpdate();
+					
+					return new User(username, email, password);
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
+			}
+		});
 	}
 
 	@Override
-	public void deleteUser(String username) {
-		// TODO Auto-generated method stub
-		
+	public void deleteUser(final String username) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
+
+					stmt = conn.prepareStatement(
+							"delete from Users where id = ?"
+					);
+
+					
+					stmt.setString(1, username);
+
+					stmt.executeUpdate();
+					
+					return true;
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
+			}
+		});
 	}
 
 	@Override
-	public User editUser(String username, String password, String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public User editUser(final String username, final String email, final String password){
+		return executeTransaction(new Transaction<User>() {
+			@Override
+			public User execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
 
+					stmt = conn.prepareStatement(
+							"update Users " +
+							"set email=?, password=?" +
+							"where id = ?"
+					);
+
+					
+					stmt.setString(1, email);
+					stmt.setString(2, password);
+					stmt.setString(3, username);
+
+					stmt.executeUpdate();
+					
+					return new User(username, email, password);
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
+			}
+		});
+	}
 }

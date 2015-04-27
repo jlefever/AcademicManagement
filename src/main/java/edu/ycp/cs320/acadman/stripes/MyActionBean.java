@@ -1,4 +1,4 @@
-package edu.ycp.cs320.acadman.view;
+package edu.ycp.cs320.acadman.stripes;
 
 import java.util.List;
 
@@ -12,31 +12,31 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 public class MyActionBean implements ActionBean{
 	
-	private ActionBeanContext context;
-	private List<Program> programs = Controller.getPrograms(3);
+	private AMActionBeanContext context;
+	//private List<Program> programs = Controller.getPrograms(3);
 	
-	@ValidateNestedProperties ({
+	/*@ValidateNestedProperties ({
 	    @Validate(field="name", required=true, minlength=3, maxlength=200),
 	    @Validate(field="description", required=false, maxlength=1000),
 	    @Validate(field="year", required=true, maxlength=4)
-	})
+	})*/
 	
 	@Override
-	public ActionBeanContext getContext() {
-		return context;
+	public AMActionBeanContext getContext() {
+		return this.context;
 	}
 
 	@Override
 	public void setContext(ActionBeanContext context) {
-		this.context = context;
+		this.context = (AMActionBeanContext) context;
 	}
 
-	public List<Program> getPrograms() {
+	/*public List<Program> getPrograms() {
 		return programs;
 	}
 
 	public void setPrograms(List<Program> programs) {
 		this.programs = programs;
-	}
+	}*/
 
 }

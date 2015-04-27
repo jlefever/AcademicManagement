@@ -1,11 +1,13 @@
-package edu.ycp.cs320.acadman.view;
+package edu.ycp.cs320.acadman.stripes;
 
+import edu.ycp.cs320.acadman.controller.Controller;
+import edu.ycp.cs320.acadman.model.User;
+import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationError;
-
 
 public class LoginActionBean extends MyActionBean {
     @Validate(required=true)
@@ -34,26 +36,27 @@ public class LoginActionBean extends MyActionBean {
     /** The URL the user was trying to access (null if the login page was accessed directly). */
     public void setTargetUrl(String targetUrl) { this.targetUrl = targetUrl; }
     
+    @DefaultHandler
     public Resolution login() {
-        Person person = pm.getPerson(this.username);
+        User user = Controller.getUser(username);
 
-        if (person == null) {
-            ValidationError error = new LocalizableError("usernameDoesNotExist");
+        if (user == null) {
+            ValidationError error = new SimpleError("usernameDoesNotExist");
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
         }
-        else if (!person.getPassword().equals(password)) {
-            ValidationError error = new LocalizableError("incorrectPassword");
+        else if (!user.getPassword().equals(password)) {
+            ValidationError error = new SimpleError("incorrectPassword");
             getContext().getValidationErrors().add("password", error);
             return getContext().getSourcePageResolution();
         }
         else {
-            getContext().setUser(person);
+            getContext().setUser(user);
             if (this.targetUrl != null) {
                 return new RedirectResolution(this.targetUrl);
             }
             else {
-                return new RedirectResolution("/bugzooky/BugList.jsp");
+                return new RedirectResolution("mainview/Test.jsp");
             }
         }
     }

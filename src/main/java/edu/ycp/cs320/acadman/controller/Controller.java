@@ -6,10 +6,17 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 import edu.ycp.cs320.acadman.persist.DatabaseProvider;
 import edu.ycp.cs320.acadman.persist.IDatabase;
 
 public class Controller {
+	
+	public static void Setup(){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.Setup();
+	}
+	
 	public static List<Program> getPrograms(int yearId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrievePrograms(yearId);
@@ -67,8 +74,8 @@ public class Controller {
 		db.editUser(username, password, email);
 	}
 	
-	public static void getUser(String username) {
+	public static User getUser(String username) {
 		IDatabase db = DatabaseProvider.getInstance();
-		db.retrieveUser(username);
+		return db.retrieveUser(username);
 	}
 }

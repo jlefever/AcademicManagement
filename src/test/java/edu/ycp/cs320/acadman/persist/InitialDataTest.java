@@ -12,6 +12,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public class InitialDataTest {
 	
@@ -70,6 +71,21 @@ public class InitialDataTest {
 		assertTrue(desired.size() == actual.size());
 		
 		for (Measurement y : desired) {
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testReadUsers() throws IOException{
+		List<User> desired = new ArrayList<User>();
+		desired.add(new User("bob", "bob@aol.com", "iambob"));
+		desired.add(new User("sally", "sally@aol.com", "iamsally"));
+		
+		List<User> actual = InitialData.readUsers();
+		
+		assertTrue(desired.size() == actual.size());
+		
+		for (User y: desired){
 			assertTrue(actual.contains(y));
 		}
 	}

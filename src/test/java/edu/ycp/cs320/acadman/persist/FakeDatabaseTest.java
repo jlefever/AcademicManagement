@@ -12,6 +12,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.User;
 
 public class FakeDatabaseTest {
 	
@@ -81,6 +82,20 @@ public class FakeDatabaseTest {
 	}
 	
 	@Test
+	public void testRetrieveUsers(){
+		List<User> desired = new ArrayList<User>();
+		desired.add(new User("bob", "bob@aol.com", "iambob"));
+		desired.add(new User("sally", "sally@aol.com", "iamsally"));
+		
+		List<User> actual = db.retrieveUsers();
+		
+		assertTrue(desired.size() == actual.size());
+		
+		for(User y : desired) {
+			assertTrue(actual.contains(y));
+		}
+	}
+	@Test
 	public void testDeleteProgram(){
 		List<Program> desired = new ArrayList<Program>();
 		desired.add(new Program(1,"Computer Science","Science with computers (also math)",3));
@@ -141,4 +156,13 @@ public class FakeDatabaseTest {
 			assertTrue(actual.contains(y));
 		}
 	}
+	
+	/*@Test
+	public void testRetrieveUser(){
+		User desired = new User("bob", "bob@aol.com", "iambob");
+		
+		User actual = db.retrieveUser("bob");
+		
+		assertTrue(actual == desired);
+	}*/
 }

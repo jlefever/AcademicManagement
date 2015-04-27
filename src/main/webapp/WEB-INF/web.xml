@@ -13,8 +13,8 @@
     
     <listener>
 	<listener-class>
-             edu.ycp.cs320.acadman.view.MyAppServletContextListener 
-        </listener-class>
+             edu.ycp.cs320.acadman.stripes.MyAppServletContextListener 
+   </listener-class>
    </listener>
     
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -32,13 +32,13 @@
         <!-- REQUIRED init parameter for the Stripes Filter. -->
         <init-param>
             <param-name>ActionResolver.Packages</param-name>
-            <param-value>net.sourceforge.stripes.examples</param-value>
+            <param-value>edu.ycp.cs320.acadman.stripes</param-value>
         </init-param>
 
         <!-- Optional init parameter for the Stripes Filter. -->
         <init-param>
             <param-name>ActionBeanContext.Class</param-name>
-            <param-value>net.sourceforge.stripes.examples.bugzooky.BugzookyActionBeanContext</param-value>
+            <param-value>edu.ycp.cs320.acadman.stripes.AMActionBeanContext</param-value>
         </init-param>
 
         <init-param>

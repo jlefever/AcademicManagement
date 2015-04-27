@@ -31,12 +31,18 @@ public class FakeDatabase implements IDatabase {
 		lastId = 3;
 	}
 	
+	@Override
+	public void Setup(){
+		this.readInitialData();
+	}
+	
 	public void readInitialData() {
 		try {
 			programs.addAll(InitialData.readPrograms());
 			outcomes.addAll(InitialData.readOutcomes());
 			indicators.addAll(InitialData.readIndicators());
 			measurements.addAll(InitialData.readMeasurements());
+			users.addAll(InitialData.readUsers());
 		} catch (IOException e) {
 			throw new IllegalStateException("Could not read initial data", e);
 		}
@@ -86,6 +92,15 @@ public class FakeDatabase implements IDatabase {
 		return result;
 	}
 
+	@Override
+	public List<User> retrieveUsers() {
+		List<User> result = new ArrayList<User>();
+		for (User x : users) {
+				result.add(x);
+		}
+		return result;
+	}
+	
 	@Override
 	public Program addProgram(String name, String description, int yearId) {
 		lastId += 1;
@@ -264,6 +279,7 @@ public class FakeDatabase implements IDatabase {
 	
 	@Override
 	public User retrieveUser(String username) {
+
 		for (User x : users) {
 			if (x.getUsername() == username) {
 				return x;
@@ -273,12 +289,13 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void addUser(String username, String email, String password) {
+	public User addUser(String username, String email, String password) {
 		User x = new User();
 		x.setUsername(username);
 		x.setEmail(email);
 		x.setPassword(password);
 		users.add(x);
+		return x;
 	}
 
 	@Override
