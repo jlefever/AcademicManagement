@@ -121,6 +121,7 @@ public class InitialData {
 				thing.setUsername(i.next());
 				thing.setEmail(i.next());
 				thing.setPassword(i.next());
+				thing.setPermissions(Integer.parseInt(i.next()));
 				list.add(thing);
 			}
 			return list;

@@ -20,6 +20,14 @@ public interface IDatabase {
 
 	public List<Measurement> retrieveMeasurements(int indicatorId);
 	
+	public Program getProgram(int id);
+	
+	public Outcome getOutcome(int id);
+	
+	public Indicator getIndicator(int id);
+	
+	public Measurement getMeasurement(int id);
+	
 	public Program addProgram(String name, String description, int yearId);
 	
 	public Outcome addOutcome(String name, String description, int minMet, int programId);
@@ -48,11 +56,11 @@ public interface IDatabase {
 	
 	public List<User> retrieveUsers();
 	
-	public User retrieveUser(String username);
+	public User getUser(String username);
 	
-	public User addUser(String username, String email, String password);
+	public User addUser(String username, String email, String password, int permissions);
 	
 	public void deleteUser(String username);
 	
-	public User editUser(String username, String password, String email);
+	public User editUser(String username, String password, String email, int permissions);
 }

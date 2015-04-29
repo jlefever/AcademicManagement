@@ -57,11 +57,47 @@ public class Controller {
 		db.addMeasurement(name, description, isMet, indicatorId);
 	}
 	
-	// Users
-	
-	public static void addUser(String username, String email, String password) {
+	public static void deleteProgram(int id){
 		IDatabase db = DatabaseProvider.getInstance();
-		db.addUser(username, email, password);
+		db.deleteProgram(id);
+	}
+	
+	public static void deleteOutcome(int id){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.deleteOutcome(id);
+	}
+	
+	public static void deleteIndicator(int id){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.deleteIndicator(id);
+	}
+	
+	public static void deleteMeasurement(int id){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.deleteMeasurement(id);
+	}
+	
+	public static void addUser(String username, String email, String password, int permissions) {
+		IDatabase db = DatabaseProvider.getInstance();
+		db.addUser(username, email, password, permissions);
+	}
+	
+	public static void editProgram(int id, String name, String description, int yearId){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.editProgram(id, name, description, yearId);
+	}
+	
+	public static void editOutcome(int id, String name, String description, int minMet, int programId){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.editOutcome(id, name, description, minMet, programId);
+	}
+	public static void editIndicator(int id, String name, String description, int minMet, int outcomeId){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.editIndicator(id, name, description, minMet, outcomeId);
+	}
+	public static void editMeasurement(int id, String name, String description, boolean isMet, int indicatorId){
+		IDatabase db = DatabaseProvider.getInstance();
+		db.editMeasurement(id, name, description, isMet, indicatorId);
 	}
 	
 	public static void deleteUser(String username) {
@@ -69,13 +105,38 @@ public class Controller {
 		db.deleteUser(username);
 	}
 	
-	public static void editUser(String username, String email, String password) {
+	public static void editUser(String username, String email, String password, int permissions) {
 		IDatabase db = DatabaseProvider.getInstance();
-		db.editUser(username, password, email);
+		db.editUser(username, email, password, permissions);
 	}
 	
 	public static User getUser(String username) {
 		IDatabase db = DatabaseProvider.getInstance();
-		return db.retrieveUser(username);
+		return db.getUser(username);
+	}
+	
+	public static Program getProgram(int id) {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.getProgram(id);
+	}
+	
+	public static Outcome getOutcome(int id) {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.getOutcome(id);
+	}
+	
+	public static Indicator getIndicator(int id) {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.getIndicator(id);
+	}
+	
+	public static Measurement getMeasurement(int id) {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.getMeasurement(id);
+	}
+	
+	public static List<User> getUsers(){
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.retrieveUsers();
 	}
 }

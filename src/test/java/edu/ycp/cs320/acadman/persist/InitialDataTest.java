@@ -78,8 +78,9 @@ public class InitialDataTest {
 	@Test
 	public void testReadUsers() throws IOException{
 		List<User> desired = new ArrayList<User>();
-		desired.add(new User("bob", "bob@aol.com", "iambob"));
-		desired.add(new User("sally", "sally@aol.com", "iamsally"));
+		desired.add(new User("bob", "bob@aol.com", "iambob", 1));
+		desired.add(new User("sally", "sally@aol.com", "iamsally", 2));
+		desired.add(new User("admin", "admin@aol.com", "iamadmin", 3));
 		
 		List<User> actual = InitialData.readUsers();
 		

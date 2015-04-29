@@ -10,10 +10,10 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationError;
-import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Outcome;
 
-public class ProgramsActionBean extends MyActionBean {
-	private List<Program> programs;
+public class OutcomesActionBean extends MyActionBean {
+	private List<Outcome> outcomes;
 	
     //@Validate(required=true)
     private String name;
@@ -22,33 +22,38 @@ public class ProgramsActionBean extends MyActionBean {
     private String description;
 
     //@Validate(required=true)
-    private int year;
+    private int minmet;
     
-    private int viewYear;
+    private int newminmet;
+    
+    private int prog;
     
     private int id;
 
-	private int progId;
+	private int outcomeId;
 
 	private String newname;
 
 	private String newdescription;
-
-	private int newyearid;
-    
-	private int viewId;
 	
-    public List<Program> getPrograms() { return programs; }
+	private int viewId;
     
-    public void setPrograms(List<Program> programs) { this.programs = programs;} 
+	
+    public List<Outcome> getOutcomes() { return outcomes; }
+    
+    public void setOutcomes(List<Outcome> Outcomes) { this.outcomes = Outcomes;} 
     
     public void setViewId(int id) { this.viewId = id;}
     
-    public int getViewId(){ return viewId;}
+    public int getviewId() {return viewId;}
     
-    public void setNewyearid(int id) { this.newyearid = id; }
+    public void setNewminmet(int newminmet) { this.newminmet = newminmet;}
     
-    public int getNewyearid() { return newyearid; }
+    public int getNewminmet() {return newminmet;}
+    
+    public void setMinmet(int minmet) { this.minmet = minmet;}
+    
+    public int getMinmet(){ return minmet;}
     
     public void setNewdescription(String name) { this.newdescription = name; }
     
@@ -58,17 +63,13 @@ public class ProgramsActionBean extends MyActionBean {
     
     public String getNewname() { return newname; }
     
-    public void setProgId(int id) { this.progId = id; }
+    public void setOutcomeId(int id) { this.outcomeId = id; }
     
-    public int getProgId() { return progId; }
+    public int getOutcomeId() { return outcomeId; }
     
     public void setId(int id) { this.id = id; }
     
     public int getId() { return id; }
-    
-    public void setViewYear(int view) { this.viewYear = view; }
-    
-    public int getViewYear() { return viewYear; }
     
     public void setName(String name) { this.name = name; }
     
@@ -78,9 +79,9 @@ public class ProgramsActionBean extends MyActionBean {
     
     public String getDescription() { return description; }
     
-    public void setYear(int year) {this.year = year;}
+    public void setProg(int prog) {this.prog = prog;}
     
-    public int getYear() { return year;}
+    public int getProg() { return prog;}
     
     public Resolution add() {
     	if(getContext().getUser().getPermissions() != 2){
@@ -88,10 +89,11 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	else{	
-        Controller.addProgram(name, description, year);
-        programs = Controller.getPrograms(year);
-        return new ForwardResolution("mainview/Programs.jsp");
+    	else{
+    	prog = getContext().getProgram().getId();
+        Controller.addOutcome(name, description, minmet, prog);
+        outcomes = Controller.getOutcomes(prog);
+        return new ForwardResolution("mainview/Outcomes.jsp");
     	}
     }
     
@@ -101,15 +103,17 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	Controller.editProgram(progId, newname, newdescription, newyearid);
-    	programs = Controller.getPrograms(newyearid);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	prog = getContext().getProgram().getId();
+    	Controller.editOutcome(outcomeId, newname, newdescription, newminmet, prog);
+    	outcomes = Controller.getOutcomes(prog);
+    	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	programs = Controller.getPrograms(viewYear);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	prog = getContext().getProgram().getId();
+    	outcomes = Controller.getOutcomes(prog);
+    	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
     public Resolution delete() {
@@ -118,14 +122,20 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	Controller.deleteProgram(id);
-    	programs = Controller.getPrograms(viewYear);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	prog = getContext().getProgram().getId();
+    	Controller.deleteOutcome(id);
+    	outcomes = Controller.getOutcomes(prog);
+    	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
-    public Resolution outcomes() {
-    	Program program = Controller.getProgram(viewId);
-    	getContext().setProgram(program);
-    	return new RedirectResolution("mainview/Outcomes.jsp");
+    public Resolution indicators(){
+    	Outcome outcome = Controller.getOutcome(viewId);
+    	getContext().setOutcome(outcome);
+    	return new RedirectResolution("mainview/Indicators.jsp");
+    }
+    
+    public Resolution back(){
+    	getContext().setProgram(null);
+    	return new RedirectResolution("mainview/Programs.jsp");
     }
 }

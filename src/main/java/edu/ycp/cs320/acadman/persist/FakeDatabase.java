@@ -275,25 +275,70 @@ public class FakeDatabase implements IDatabase {
 		return edited;
 	}
 	
-	// Users
 	
 	@Override
-	public User retrieveUser(String username) {
+	public User getUser(String username) {
 
 		for (User x : users) {
-			if (x.getUsername() == username) {
+			
+			if (x.getUsername().equals(username)){
 				return x;
 			}
 		}
 		return null;
 	}
 
+	public Program getProgram(int id) {
+
+		for (Program x : programs) {
+			
+			if (x.getId() == id){
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	public Outcome getOutcome(int id) {
+
+		for (Outcome x : outcomes) {
+			
+			if (x.getId() == id){
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	public Indicator getIndicator(int id) {
+
+		for (Indicator x : indicators) {
+			
+			if (x.getId() == id){
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	public Measurement getMeasurement(int id) {
+
+		for (Measurement x : measurements) {
+			
+			if (x.getId() == id){
+				return x;
+			}
+		}
+		return null;
+	}
+	
 	@Override
-	public User addUser(String username, String email, String password) {
+	public User addUser(String username, String email, String password, int permissions) {
 		User x = new User();
 		x.setUsername(username);
 		x.setEmail(email);
 		x.setPassword(password);
+		x.setPermissions(permissions);
 		users.add(x);
 		return x;
 	}
@@ -311,7 +356,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public User editUser(String username, String password, String email) {
+	public User editUser(String username, String password, String email, int permissions) {
 		User edited = new User();
 		for(User x : users)
 		{
@@ -319,6 +364,7 @@ public class FakeDatabase implements IDatabase {
 				x.setUsername(username);
 				x.setPassword(password);
 				x.setEmail(email);
+				x.setPermissions(permissions);
 				edited = x;
 			}
 		}

@@ -431,6 +431,7 @@ public class SQLiteDatabase implements IDatabase {
 		user.setUsername(resultSet.getString(index++));
 		user.setEmail(resultSet.getString(index++));
 		user.setPassword(resultSet.getString(index++));
+		user.setPermissions(resultSet.getInt(index++));
 	}
 	
 	@Override
@@ -554,7 +555,7 @@ public class SQLiteDatabase implements IDatabase {
 
 					stmt = conn.prepareStatement(
 							"update Outcomes " +
-							"set name=?, description=?, min_met=? program_id=?" +
+							"set name=?, description=?, min_met=?, program_id=?" +
 							"where id = ?"
 					);
 
@@ -566,6 +567,7 @@ public class SQLiteDatabase implements IDatabase {
 					stmt.setInt(5, id);
 
 					stmt.executeUpdate();
+					
 					
 					return new Outcome(id, name, description, minMet, programId);
 				}
@@ -696,13 +698,13 @@ public class SQLiteDatabase implements IDatabase {
 			System.out.println(i);
 		}
 		
-		db.addUser("Dave", "dav5037", "iamdave");
+		db.addUser("Dave", "dav5037", "iamdave", 2);
 		
 		for (User i : db.retrieveUsers()){
 			System.out.println(i);
 		}
 		
-		System.out.println(db.retrieveUser("Dave"));
+		System.out.println(db.getUser("Dave"));
 		System.out.println("Success!");
 	}
 
@@ -754,7 +756,8 @@ public class SQLiteDatabase implements IDatabase {
 					stmt5 = conn.prepareStatement("create table Users("
 							+ "    username varchar(200) primary key,"
 							+ "    email varchar(2000),"
-							+ "    password varchar(200)"
+							+ "    password varchar(200),"
+							+ "    permissions integer"
 							+ ")");
 					stmt5.executeUpdate();
 
@@ -844,11 +847,12 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertMeasurement.executeBatch();
 
-					insertUser = conn.prepareStatement("insert into Users values (?,?,?)");
+					insertUser = conn.prepareStatement("insert into Users values (?,?,?,?)");
 					for (User user : UserList) {
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getEmail());
 						insertUser.setString(3, user.getPassword());
+						insertUser.setInt(4, user.getPermissions());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
@@ -900,7 +904,7 @@ public class SQLiteDatabase implements IDatabase {
 	}
 	
 	@Override
-	public User retrieveUser(final String username) {
+	public User getUser(final String username) {
 		return executeTransaction(new Transaction<User>() {
 			@Override
 			public User execute(Connection conn) throws SQLException {
@@ -935,9 +939,154 @@ public class SQLiteDatabase implements IDatabase {
 		});
 	}
 
+	
 	@Override
-	public User addUser(final String username, final String email, final String password){
-		if(this.retrieveUser(username) == null)
+	public Program getProgram(final int id) {
+		return executeTransaction(new Transaction<Program>() {
+			@Override
+			public Program execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Programs where id=?"	
+					);
+					
+					stmt.setInt(1, id);
+					
+					Program result = new Program();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadProgram(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+			}
+		});
+	}
+	
+	@Override
+	public Outcome getOutcome(final int id) {
+		return executeTransaction(new Transaction<Outcome>() {
+			@Override
+			public Outcome execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Outcomes where id=?"	
+					);
+					
+					stmt.setInt(1, id);
+					
+					Outcome result = new Outcome();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadOutcome(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+			}
+		});
+	}
+	
+	@Override
+	public Indicator getIndicator(final int id) {
+		return executeTransaction(new Transaction<Indicator>() {
+			@Override
+			public Indicator execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Indicators where id=?"	
+					);
+					
+					stmt.setInt(1, id);
+					
+					Indicator result = new Indicator();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadIndicator(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+			}
+		});
+	}
+	
+	@Override
+	public Measurement getMeasurement(final int id) {
+		return executeTransaction(new Transaction<Measurement>() {
+			@Override
+			public Measurement execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Measurements where id=?"	
+					);
+					
+					stmt.setInt(1, id);
+					
+					Measurement result = new Measurement();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadMeasurement(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+			}
+		});
+	}
+	
+	@Override
+	public User addUser(final String username, final String email, final String password, final int permissions){
+		if(this.getUser(username) == null)
 		{
 			return executeTransaction(new Transaction<User>() {
 				@Override
@@ -946,17 +1095,18 @@ public class SQLiteDatabase implements IDatabase {
 					try {
 
 						stmt = conn.prepareStatement(
-								"insert into Users values (?, ?, ?)"
+								"insert into Users values (?, ?, ?, ?)"
 						);
 
 					
 						stmt.setString(1, username);
 						stmt.setString(2, email);
 						stmt.setString(3, password);
+						stmt.setInt(4, permissions);
 
 						stmt.executeUpdate();
 					
-						return new User(username, email, password);
+						return new User(username, email, password, permissions);
 					}
 
 					finally {
@@ -980,7 +1130,7 @@ public class SQLiteDatabase implements IDatabase {
 				try {
 
 					stmt = conn.prepareStatement(
-							"delete from Users where id = ?"
+							"delete from Users where username=?"
 					);
 
 					
@@ -1000,7 +1150,7 @@ public class SQLiteDatabase implements IDatabase {
 	}
 
 	@Override
-	public User editUser(final String username, final String email, final String password){
+	public User editUser(final String username, final String email, final String password, final int permissions){
 		return executeTransaction(new Transaction<User>() {
 			@Override
 			public User execute(Connection conn) throws SQLException {
@@ -1009,18 +1159,19 @@ public class SQLiteDatabase implements IDatabase {
 
 					stmt = conn.prepareStatement(
 							"update Users " +
-							"set email=?, password=?" +
-							"where id = ?"
+							"set email=?, password=?, permissions=?" +
+							"where username = ?"
 					);
 
 					
 					stmt.setString(1, email);
 					stmt.setString(2, password);
-					stmt.setString(3, username);
+					stmt.setInt(3, permissions);
+					stmt.setString(4, username);
 
 					stmt.executeUpdate();
 					
-					return new User(username, email, password);
+					return new User(username, email, password, permissions);
 				}
 
 				finally {

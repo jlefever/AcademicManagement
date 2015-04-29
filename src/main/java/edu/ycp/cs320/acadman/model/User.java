@@ -4,15 +4,17 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
+	private int permissions;
 
 	public User() {
 
 	}
 
-	public User(String username, String email, String password){
+	public User(String username, String email, String password, int permissions){
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.permissions = permissions;
 	}
 	
 	public String getUsername() {
@@ -39,6 +41,14 @@ public class User {
 		this.password = password;
 	}
 
+	public int getPermissions() {
+		return permissions;
+	}
+	
+	public void setPermissions(int permissions){
+		this.permissions = permissions;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,13 +85,16 @@ public class User {
 				return false;
 		} else if (!username.equals(other.username))
 			return false;
+		if (permissions != other.permissions)
+			return false;
+		
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", email=" + email
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", permissions=" + permissions + "]";
 	}
 
 }

@@ -8,22 +8,18 @@
 	<tr>
 		<td style="width: 25%; vertical-align: top;">
 			<!-- Somewhat contrived example of using the errors tag 'action' attribute. -->
-			<stripes:errors action="/Programs.action" /> 
-			<stripes:form action="/Programs.action" focus="">
+			<stripes:errors action="/Indicators.action" /> 
+			<stripes:form action="/Indicators.action" focus="">
 				<table>
-  					<c:forEach items="${actionBean.programs}" var="programs">
+  					<c:forEach items="${actionBean.indicators}" var="indicators">
   						<tr>
-  							<td>${programs}</td>
+  							<td>${indicators}</td>
   						</tr>
         			</c:forEach> 
 				</table>
 				 <table>
 					<tr>
-						<td style="font-weight: bold;"><stripes:label for="Year"/>:</td>
-						<td><stripes:text name="viewYear"/></td>
-					</tr>
-					<tr>
-						<td style="test-align: left;"><stripes:submit name="view" value = "View Programs"/></td>
+						<td style="test-align: center;"><stripes:submit name="view" value = "View Indicators"/></td>
 					</tr>
 				</table>
 				<c:if test="${user.permissions == 2}">
@@ -33,31 +29,31 @@
 							<td><stripes:text name="name" /></td>
 							<td style="font-weight: bold;"><stripes:label for="description"/>:</td>
 							<td><stripes:text name="description" /></td>
-							<td style="font-weight: bold;"><stripes:label for="year"/>:</td>
-							<td><stripes:text name="year" /></td>
+							<td style="font-weight: bold;"><stripes:label for="minMet"/>:</td>
+							<td><stripes:text name="minMet" /></td>
 						</tr>
 						<tr>
-							<td style="text-align: left;"><stripes:submit name="add" value="Add" /></td>
+							<td style="text-align: center;"><stripes:submit name="add" value="Add" /></td>
 						</tr>
 				</table>
 				<table>
 					<tr>
-						<td style="font-weight: bold;"><stripes:label for="Program Id"/>:</td>
-						<td><stripes:text name="progId"/></td>
+						<td style="font-weight: bold;"><stripes:label for="Indicator Id"/>:</td>
+						<td><stripes:text name="indicatorId"/></td>
 						<td style="font-weight: bold;"><stripes:label for="New Name" />:</td>
 						<td><stripes:text name="newname" /></td>
 						<td style="font-weight: bold;"><stripes:label for="New Description"/>:</td>
 						<td><stripes:text name="newdescription" /></td>
-						<td style="font-weight: bold;"><stripes:label for="New Year"/>:</td>
-						<td><stripes:text name="newyearid" /></td>
+						<td style="font-weight: bold;"><stripes:label for="New MinMet"/>:</td>
+						<td><stripes:text name="newminmet" /></td>
 					</tr>
 					<tr>
-						<td style="text-align: left;"><stripes:submit name="edit" value="Edit Program" /></td>
+						<td style="text-align: center;"><stripes:submit name="edit" value="Edit Program" /></td>
 					</tr>
 				</table>
 				<table>
 					<tr>
-						<td style="font-weight: bold;"><stripes:label for="Program id"/>:</td>
+						<td style="font-weight: bold;"><stripes:label for="Indicator id"/>:</td>
 						<td><stripes:text name="id" /></td>
 					</tr>
 					<tr>
@@ -67,11 +63,16 @@
 				</c:if>
 				<table>
 					<tr>
-						<td style="font-weight: bold;"><stripes:label for="View Outcomes for Program Id"/>:</td>
+						<td style="font-weight: bold;"><stripes:label for="View Measurements for Indicator Id"/>:</td>
 						<td><stripes:text name="viewId"/></td>
 					</tr>
 					<tr>
-						<td style="text-align: left;"><stripes:submit name="outcomes" value ="View Outcomes"/></td>
+						<td style="text-align: left;"><stripes:submit name="measurements" value ="View Measurements"/></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td style="text-align: left;"><stripes:submit name="back" value = "Back to Outcomes"/></td>
 					</tr>
 				</table>
 			</stripes:form>

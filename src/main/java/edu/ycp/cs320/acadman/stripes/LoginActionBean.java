@@ -55,8 +55,11 @@ public class LoginActionBean extends MyActionBean {
             if (this.targetUrl != null) {
                 return new RedirectResolution(this.targetUrl);
             }
-            else {
-                return new RedirectResolution("mainview/Test.jsp");
+            else if (user.getPermissions() == 3){
+            	return new RedirectResolution("mainview/Users.jsp");
+            }
+            else{
+                return new RedirectResolution("mainview/Programs.jsp");
             }
         }
     }

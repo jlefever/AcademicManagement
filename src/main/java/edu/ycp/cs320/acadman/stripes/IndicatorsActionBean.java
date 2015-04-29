@@ -10,10 +10,10 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationError;
-import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Indicator;
 
-public class ProgramsActionBean extends MyActionBean {
-	private List<Program> programs;
+public class IndicatorsActionBean extends MyActionBean {
+	private List<Indicator> indicators;
 	
     //@Validate(required=true)
     private String name;
@@ -22,33 +22,38 @@ public class ProgramsActionBean extends MyActionBean {
     private String description;
 
     //@Validate(required=true)
-    private int year;
+    private int minmet;
     
-    private int viewYear;
+    private int newminmet;
+    
+    private int outcome;
     
     private int id;
 
-	private int progId;
+	private int indicatorId;
 
 	private String newname;
 
 	private String newdescription;
-
-	private int newyearid;
-    
-	private int viewId;
 	
-    public List<Program> getPrograms() { return programs; }
+	private int viewId;
     
-    public void setPrograms(List<Program> programs) { this.programs = programs;} 
+	
+    public List<Indicator> getIndicators() { return indicators; }
+     
+    public void setIndicators(List<Indicator> Indicators) { this.indicators = Indicators;} 
     
     public void setViewId(int id) { this.viewId = id;}
     
-    public int getViewId(){ return viewId;}
+    public int getviewId() {return viewId;}
     
-    public void setNewyearid(int id) { this.newyearid = id; }
+    public void setNewminmet(int newminmet) { this.newminmet = newminmet;}
     
-    public int getNewyearid() { return newyearid; }
+    public int getNewminmet() {return newminmet;}
+    
+    public void setMinmet(int minmet) { this.minmet = minmet;}
+    
+    public int getMinmet(){ return minmet;}
     
     public void setNewdescription(String name) { this.newdescription = name; }
     
@@ -58,17 +63,13 @@ public class ProgramsActionBean extends MyActionBean {
     
     public String getNewname() { return newname; }
     
-    public void setProgId(int id) { this.progId = id; }
+    public void setIndicatorId(int id) { this.indicatorId = id; }
     
-    public int getProgId() { return progId; }
+    public int getIndicatorId() { return indicatorId; }
     
     public void setId(int id) { this.id = id; }
     
     public int getId() { return id; }
-    
-    public void setViewYear(int view) { this.viewYear = view; }
-    
-    public int getViewYear() { return viewYear; }
     
     public void setName(String name) { this.name = name; }
     
@@ -78,9 +79,9 @@ public class ProgramsActionBean extends MyActionBean {
     
     public String getDescription() { return description; }
     
-    public void setYear(int year) {this.year = year;}
+    public void setOutcome(int outcome) {this.outcome = outcome;}
     
-    public int getYear() { return year;}
+    public int getOutcome() { return outcome;}
     
     public Resolution add() {
     	if(getContext().getUser().getPermissions() != 2){
@@ -88,10 +89,11 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	else{	
-        Controller.addProgram(name, description, year);
-        programs = Controller.getPrograms(year);
-        return new ForwardResolution("mainview/Programs.jsp");
+    	else{
+    	outcome = getContext().getOutcome().getId();
+        Controller.addIndicator(name, description, minmet, outcome);
+        indicators = Controller.getIndicators(outcome);
+        return new ForwardResolution("mainview/Indicators.jsp");
     	}
     }
     
@@ -101,15 +103,17 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	Controller.editProgram(progId, newname, newdescription, newyearid);
-    	programs = Controller.getPrograms(newyearid);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	outcome = getContext().getOutcome().getId();
+    	Controller.editIndicator(indicatorId, newname, newdescription, newminmet, outcome);
+    	indicators = Controller.getIndicators(outcome);
+    	return new ForwardResolution("mainview/Indicators.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	programs = Controller.getPrograms(viewYear);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	outcome = getContext().getOutcome().getId();
+    	indicators = Controller.getIndicators(outcome);
+    	return new ForwardResolution("mainview/Indicators.jsp");
     }
     
     public Resolution delete() {
@@ -118,14 +122,20 @@ public class ProgramsActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	Controller.deleteProgram(id);
-    	programs = Controller.getPrograms(viewYear);
-    	return new ForwardResolution("mainview/Programs.jsp");
+    	outcome = getContext().getOutcome().getId();
+    	Controller.deleteIndicator(id);
+    	indicators = Controller.getIndicators(outcome);
+    	return new ForwardResolution("mainview/Indicators.jsp");
     }
     
-    public Resolution outcomes() {
-    	Program program = Controller.getProgram(viewId);
-    	getContext().setProgram(program);
+    public Resolution measurements(){
+    	Indicator indicator = Controller.getIndicator(viewId);
+    	getContext().setIndicator(indicator);
+    	return new RedirectResolution("mainview/Measurements.jsp");
+    }
+    
+    public Resolution back(){
+    	getContext().setOutcome(null);
     	return new RedirectResolution("mainview/Outcomes.jsp");
     }
 }

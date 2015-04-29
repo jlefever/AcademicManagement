@@ -84,8 +84,9 @@ public class FakeDatabaseTest {
 	@Test
 	public void testRetrieveUsers(){
 		List<User> desired = new ArrayList<User>();
-		desired.add(new User("bob", "bob@aol.com", "iambob"));
-		desired.add(new User("sally", "sally@aol.com", "iamsally"));
+		desired.add(new User("bob", "bob@aol.com", "iambob", 1));
+		desired.add(new User("sally", "sally@aol.com", "iamsally", 2));
+		desired.add(new User("admin", "admin@aol.com", "iamadmin", 3));
 		
 		List<User> actual = db.retrieveUsers();
 		
@@ -157,12 +158,12 @@ public class FakeDatabaseTest {
 		}
 	}
 	
-	/*@Test
+	@Test
 	public void testRetrieveUser(){
-		User desired = new User("bob", "bob@aol.com", "iambob");
+		User desired = new User("bob", "bob@aol.com", "iambob", 1);
 		
-		User actual = db.retrieveUser("bob");
+		User actual = db.getUser("bob");
 		
-		assertTrue(actual == desired);
-	}*/
+		assertTrue(actual.equals(desired));
+	}
 }
