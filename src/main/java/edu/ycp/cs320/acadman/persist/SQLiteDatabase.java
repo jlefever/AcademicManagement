@@ -400,7 +400,7 @@ public class SQLiteDatabase implements IDatabase {
 		program.setId(resultSet.getInt(index++));
 		program.setName(resultSet.getString(index++));
 		program.setDescription(resultSet.getString(index++));
-		program.setYearId(resultSet.getInt(index++));
+		program.setYear(resultSet.getInt(index++));
 	}
 	
 	private void loadOutcome(Outcome outcome, ResultSet resultSet, int index) throws SQLException {
@@ -806,7 +806,7 @@ public class SQLiteDatabase implements IDatabase {
 						insertProgram.setInt(1, program.getId());
 						insertProgram.setString(2, program.getName());
 						insertProgram.setString(3, program.getDescription());
-						insertProgram.setInt(4, program.getYearId());
+						insertProgram.setInt(4, program.getYear());
 						insertProgram.addBatch();
 					}
 					insertProgram.executeBatch();

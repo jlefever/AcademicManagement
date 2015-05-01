@@ -42,12 +42,12 @@ public class Program {
 		this.description = description;
 	}
 
-	public int getYearId() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYearId(int yearId) {
-		this.year = yearId;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class InitialData {
 				thing.setId(Integer.parseInt(i.next()));
 				thing.setName(i.next());
 				thing.setDescription(i.next());
-				thing.setYearId(Integer.parseInt(i.next()));
+				thing.setYear(Integer.parseInt(i.next()));
 				list.add(thing);
 			}
 			return list;

@@ -52,7 +52,7 @@ public class FakeDatabase implements IDatabase {
 	public List<Program> retrievePrograms(int yearId) {
 		List<Program> result = new ArrayList<Program>();
 		for (Program x : programs) {
-			if (x.getYearId() == yearId) {
+			if (x.getYear() == yearId) {
 				result.add(x);
 			}
 		}
@@ -108,7 +108,7 @@ public class FakeDatabase implements IDatabase {
 		p.setId(lastId);
 		p.setName(name);
 		p.setDescription(description);
-		p.setYearId(yearId);
+		p.setYear(yearId);
 		programs.add(p);
 		return p;
 	}
@@ -217,7 +217,7 @@ public class FakeDatabase implements IDatabase {
 			{
 				i.setName(name);
 				i.setDescription(description);
-				i.setYearId(yearId);
+				i.setYear(yearId);
 				edited = i;
 			}
 		}
