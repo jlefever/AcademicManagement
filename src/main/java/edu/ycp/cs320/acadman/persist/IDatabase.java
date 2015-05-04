@@ -35,7 +35,7 @@ public interface IDatabase {
 	
 	public Indicator addIndicator(String name, String description, int minMet, int outcomeId);
 	
-	public Measurement addMeasurement(String name, String description, boolean isMet, int indicatorId);
+	public Measurement addMeasurement(String name, String description, int indicatorId);
 	
 	public void deleteProgram(int id);
 	
@@ -51,7 +51,7 @@ public interface IDatabase {
 	
 	public Indicator editIndicator(int id, String name, String description, int minMet, int outcomeId);
 	
-	public Measurement editMeasurement(int id, String name, String description, boolean isMet, int indicatorId);
+	public Measurement editMeasurement(int id, String name, String description, int indicatorId);
 	
 	public List<User> retrieveUsers();
 	
@@ -70,4 +70,6 @@ public interface IDatabase {
 	public Rubric editRubric(int measurementId, int below, int meets, int exceeds, int target);
 	
 	public void deleteRubric(int measurementId);
+	
+	public void updateMet(int measurementId, boolean met);
 }

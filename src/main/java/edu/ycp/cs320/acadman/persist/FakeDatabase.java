@@ -146,14 +146,14 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public Measurement addMeasurement(String name, String description, boolean isMet,
+	public Measurement addMeasurement(String name, String description,
 			int indicatorId) {
 		lastId += 1;
 		Measurement m = new Measurement();
 		m.setId(lastId);
 		m.setName(name);
 		m.setDescription(description);
-		m.setMet(isMet);
+		m.setMet(false);
 		m.setIndicatorId(indicatorId);
 		measurements.add(m);
 		return m;
@@ -263,7 +263,7 @@ public class FakeDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Measurement editMeasurement(int id, String name, String description, boolean isMet, int indicatorId){
+	public Measurement editMeasurement(int id, String name, String description, int indicatorId){
 		Measurement edited = new Measurement();
 		for(Measurement i : measurements)
 		{
@@ -271,7 +271,6 @@ public class FakeDatabase implements IDatabase {
 			{
 				i.setName(name);
 				i.setDescription(description);
-				i.setMet(isMet);
 				i.setIndicatorId(indicatorId);
 				edited = i;
 			}
@@ -424,5 +423,15 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 		return edited;
+	}
+	
+	@Override
+	public void updateMet(int measurementId, boolean met) {
+		for(Measurement x : measurements)
+		{
+			if(x.getId() == measurementId) {
+				x.setMet(met);
+			}
+		}
 	}
 }

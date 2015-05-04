@@ -356,7 +356,7 @@ public class SQLiteDatabase implements IDatabase {
 	}
 
 	@Override
-	public Measurement addMeasurement(final String name, final String description, final boolean isMet,
+	public Measurement addMeasurement(final String name, final String description,
 			final int indicatorId) {
 		return executeTransaction(new Transaction<Measurement>() {
 			@Override
@@ -374,7 +374,7 @@ public class SQLiteDatabase implements IDatabase {
 					stmt.setString(1, name);
 					stmt.setString(2, description);
 					stmt.setInt(3, indicatorId);
-					stmt.setBoolean(4, isMet);
+					stmt.setBoolean(4, false);
 
 					stmt.executeUpdate();
 					
@@ -385,7 +385,7 @@ public class SQLiteDatabase implements IDatabase {
 					int generatedId = genKeys.getInt(1);
 					System.out.println("Added measurement with id=" + generatedId);
 					
-					return new Measurement(generatedId, name, description, isMet, indicatorId);
+					return new Measurement(generatedId, name, description, false, indicatorId);
 				}
 
 				finally {
@@ -622,7 +622,8 @@ public class SQLiteDatabase implements IDatabase {
 		});
 	}
 	
-	public Measurement editMeasurement(final int id, final String name, final String description, final boolean isMet, final int indicatorId){
+	@Override
+	public Measurement editMeasurement(final int id, final String name, final String description, final int indicatorId){
 		return executeTransaction(new Transaction<Measurement>() {
 			@Override
 			public Measurement execute(Connection conn) throws SQLException {
@@ -631,20 +632,19 @@ public class SQLiteDatabase implements IDatabase {
 
 					stmt = conn.prepareStatement(
 							"update Measurements " +
-							"set name=?, description=?, met=?, indicator_id=?" +
+							"set name=?, description=?, indicator_id=?" +
 							"where id = ?"
 					);
 
 					
 					stmt.setString(1, name);
 					stmt.setString(2, description);
-					stmt.setBoolean(3, isMet);
-					stmt.setInt(4, indicatorId);
-					stmt.setInt(5, id);
+					stmt.setInt(3, indicatorId);
+					stmt.setInt(4, id);
 
 					stmt.executeUpdate();
 					
-					return new Measurement(id, name, description, isMet, indicatorId);
+					return new Measurement(id, name, description, false, indicatorId);
 				}
 
 				finally {
@@ -703,17 +703,12 @@ public class SQLiteDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		
-		for (User i : db.retrieveUsers()){
+		for (Rubric i : db.retrieveRubrics()){
 			System.out.println(i);
 		}
 		
-		db.addUser("Dave", "dav5037", "iamdave", 2);
+		System.out.print(db.getRubric(1));
 		
-		for (User i : db.retrieveUsers()){
-			System.out.println(i);
-		}
-		
-		System.out.println(db.getUser("Dave"));
 		System.out.println("Success!");
 	}
 
@@ -778,7 +773,8 @@ public class SQLiteDatabase implements IDatabase {
 							+ "    exceeds integer,"
 							+ "    target integer"
 							+ ")");
-
+					stmt6.executeUpdate();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -879,13 +875,14 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertUser.executeBatch();
 					
-					insertRubric = conn.prepareStatement(" insert into Rubrics values (?, ?, ?, ?, ?)");
+					insertRubric = conn.prepareStatement("insert into Rubrics values (?,?,?,?,?)");
 					for (Rubric rubric: RubricList){
 						insertRubric.setInt(1, rubric.getMeasurementId());
 						insertRubric.setInt(2, rubric.getBelow());
 						insertRubric.setInt(3, rubric.getMeets());
 						insertRubric.setInt(4, rubric.getExceeds());
 						insertRubric.setInt(5, rubric.getTarget());
+						insertRubric.addBatch();
 					}
 					insertRubric.executeBatch();
 					
@@ -1226,7 +1223,7 @@ public class SQLiteDatabase implements IDatabase {
 
 					stmt = conn.prepareStatement(
 							"update Rubrics " +
-							"set below=?, meets=?, exceeds=? target=?" +
+							"set below=?, meets=?, exceeds=?, target=?" +
 							"where measurement_id = ?"
 					);
 
@@ -1348,6 +1345,70 @@ public class SQLiteDatabase implements IDatabase {
 					DBUtil.closeQuietly(resultSet);
 				}
 				
+			}
+		});
+	}
+	
+	public List<Rubric> retrieveRubrics() {
+		return executeTransaction(new Transaction<List<Rubric>>() {
+			@Override
+			public List<Rubric> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from Rubrics"
+					);
+					
+					List<Rubric> result = new ArrayList<Rubric>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while (resultSet.next()) {
+						Rubric rubric = new Rubric();
+						loadRubric(rubric, resultSet, 1);
+						
+						result.add(rubric);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public void updateMet(final int measurementId, final boolean met){
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
+
+					stmt = conn.prepareStatement(
+							"update Measurements " +
+							"set met=?" +
+							"where id = ?"
+					);
+
+					
+					stmt.setBoolean(1, met);
+					stmt.setInt(2, measurementId);
+
+					stmt.executeUpdate();
+					
+					return true;
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
 			}
 		});
 	}

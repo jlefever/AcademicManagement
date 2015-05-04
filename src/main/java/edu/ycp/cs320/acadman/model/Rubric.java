@@ -10,7 +10,7 @@ public class Rubric {
 	public Rubric() {
 
 	}
-	public Rubric(int measurementId, int meets, int below, int exceeds,
+	public Rubric(int measurementId, int below, int meets, int exceeds,
 			int target) {
 		super();
 		this.meets = meets;
@@ -53,7 +53,7 @@ public class Rubric {
 	
 	@Override
 	public String toString() {
-		return "Measurement [meets=" + meets + ", below="
+		return "Rubric [meets=" + meets + ", below="
 				+ below + ", exceeds=" + exceeds + ", target="
 				+ target + ", measurementId=" + measurementId +"]";
 	}

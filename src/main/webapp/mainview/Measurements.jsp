@@ -17,11 +17,6 @@
   						</tr>
         			</c:forEach> 
 				</table>
-				 <table>
-					<tr>
-						<td style="test-align: center;"><stripes:submit name="view" value = "View Measurements"/></td>
-					</tr>
-				</table>
 				<c:if test="${user.permissions <= 2}">
 					<table>
 						<tr>
@@ -29,8 +24,6 @@
 							<td><stripes:text name="name" /></td>
 							<td style="font-weight: bold;"><stripes:label for="description"/>:</td>
 							<td><stripes:text name="description" /></td>
-							<td style="font-weight: bold;"><stripes:label for="isMet"/>:</td>
-							<td><stripes:text name="ismet" /></td>
 						</tr>
 						<tr>
 							<td style="text-align: center;"><stripes:submit name="add" value="Add" /></td>
@@ -44,8 +37,6 @@
 						<td><stripes:text name="newname" /></td>
 						<td style="font-weight: bold;"><stripes:label for="New Description"/>:</td>
 						<td><stripes:text name="newdescription" /></td>
-						<td style="font-weight: bold;"><stripes:label for="New isMet"/>:</td>
-						<td><stripes:text name="newismet" /></td>
 					</tr>
 					<tr>
 						<td style="text-align: center;"><stripes:submit name="edit" value="Edit Measurement" /></td>
@@ -67,7 +58,7 @@
 						<td><stripes:text name="viewId"/></td>
 					</tr>
 					<tr>
-						<td style="text-align: left;"><stripes:submit name="measurement" value ="View Measurement"/></td>
+						<td style="text-align: left;"><stripes:submit name="rubric" value ="View Details"/></td>
 					</tr>
 				</table>
 				<table>
