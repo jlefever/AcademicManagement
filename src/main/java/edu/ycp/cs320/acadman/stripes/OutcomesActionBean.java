@@ -13,7 +13,6 @@ import net.sourceforge.stripes.validation.ValidationError;
 import edu.ycp.cs320.acadman.model.Outcome;
 
 public class OutcomesActionBean extends MyActionBean {
-	private List<Outcome> outcomes;
 	
     //@Validate(required=true)
     private String name;
@@ -37,6 +36,8 @@ public class OutcomesActionBean extends MyActionBean {
 	private String newdescription;
 	
 	private int viewId;
+	
+	private List<Outcome> outcomes;
     
 	
     public List<Outcome> getOutcomes() { return outcomes; }
