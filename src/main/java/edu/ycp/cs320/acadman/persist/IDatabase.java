@@ -6,6 +6,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public interface IDatabase {
@@ -52,8 +53,6 @@ public interface IDatabase {
 	
 	public Measurement editMeasurement(int id, String name, String description, boolean isMet, int indicatorId);
 	
-	// Users
-	
 	public List<User> retrieveUsers();
 	
 	public User getUser(String username);
@@ -63,4 +62,12 @@ public interface IDatabase {
 	public void deleteUser(String username);
 	
 	public User editUser(String username, String password, String email, int permissions);
+	
+	public Rubric getRubric(int measurementId);
+	
+	public Rubric addRubric(int measurementId, int below, int meets, int exceeds, int target);
+	
+	public Rubric editRubric(int measurementId, int below, int meets, int exceeds, int target);
+	
+	public void deleteRubric(int measurementId);
 }

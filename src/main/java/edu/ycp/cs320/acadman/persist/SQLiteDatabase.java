@@ -13,6 +13,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public class SQLiteDatabase implements IDatabase {
@@ -434,6 +435,14 @@ public class SQLiteDatabase implements IDatabase {
 		user.setPermissions(resultSet.getInt(index++));
 	}
 	
+	private void loadRubric(Rubric rubric, ResultSet resultSet, int index) throws SQLException {
+		rubric.setMeasurementId(resultSet.getInt(index++));
+		rubric.setBelow(resultSet.getInt(index++));
+		rubric.setMeets(resultSet.getInt(index++));
+		rubric.setExceeds(resultSet.getInt(index++));
+		rubric.setTarget(resultSet.getInt(index++));
+	}
+	
 	@Override
 	public void deleteProgram(final int id) {
 		executeTransaction(new Transaction<Boolean>() {
@@ -717,6 +726,7 @@ public class SQLiteDatabase implements IDatabase {
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
 				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;
 
 				try {
 					stmt1 = conn.prepareStatement("create table Programs("
@@ -760,6 +770,14 @@ public class SQLiteDatabase implements IDatabase {
 							+ "    permissions integer"
 							+ ")");
 					stmt5.executeUpdate();
+					
+					stmt6 = conn.prepareStatement("create table Rubrics("
+							+ "    measurement_id integer primary key,"
+							+ "    below integer,"
+							+ "    meets integer,"
+							+ "    exceeds integer,"
+							+ "    target integer"
+							+ ")");
 
 					return true;
 				} finally {
@@ -768,6 +786,7 @@ public class SQLiteDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
 				}
 			}
 		});
@@ -782,6 +801,7 @@ public class SQLiteDatabase implements IDatabase {
 				List<Indicator> IndicatorList;
 				List<Measurement> MeasurementList;
 				List<User> UserList;
+				List<Rubric> RubricList;
 
 				try {
 					ProgramList = InitialData.readPrograms();
@@ -789,6 +809,7 @@ public class SQLiteDatabase implements IDatabase {
 					IndicatorList = InitialData.readIndicators();
 					MeasurementList = InitialData.readMeasurements();
 					UserList = InitialData.readUsers();
+					RubricList = InitialData.readRubrics();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -798,6 +819,7 @@ public class SQLiteDatabase implements IDatabase {
 				PreparedStatement insertIndicator = null;
 				PreparedStatement insertMeasurement = null;
 				PreparedStatement insertUser = null;
+				PreparedStatement insertRubric = null;
 
 				try {
 					insertProgram = conn
@@ -857,13 +879,25 @@ public class SQLiteDatabase implements IDatabase {
 					}
 					insertUser.executeBatch();
 					
+					insertRubric = conn.prepareStatement(" insert into Rubrics values (?, ?, ?, ?, ?)");
+					for (Rubric rubric: RubricList){
+						insertRubric.setInt(1, rubric.getMeasurementId());
+						insertRubric.setInt(2, rubric.getBelow());
+						insertRubric.setInt(3, rubric.getMeets());
+						insertRubric.setInt(4, rubric.getExceeds());
+						insertRubric.setInt(5, rubric.getTarget());
+					}
+					insertRubric.executeBatch();
+					
 					return true;
+				
 				} finally {
 					DBUtil.closeQuietly(insertProgram);
 					DBUtil.closeQuietly(insertOutcome);
 					DBUtil.closeQuietly(insertIndicator);
 					DBUtil.closeQuietly(insertMeasurement);
 					DBUtil.closeQuietly(insertUser);
+					DBUtil.closeQuietly(insertRubric);
 				}
 			}
 		});
@@ -1178,6 +1212,142 @@ public class SQLiteDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt);
 				}
 
+			}
+		});
+	}
+	
+	@Override
+	public Rubric editRubric(final int measurementId, final int below, final int meets, final int exceeds, final int target){
+		return executeTransaction(new Transaction<Rubric>() {
+			@Override
+			public Rubric execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
+
+					stmt = conn.prepareStatement(
+							"update Rubrics " +
+							"set below=?, meets=?, exceeds=? target=?" +
+							"where measurement_id = ?"
+					);
+
+					
+					stmt.setInt(1, below);
+					stmt.setInt(2, meets);
+					stmt.setInt(3, exceeds);
+					stmt.setInt(4, target);
+					stmt.setInt(5, measurementId);
+
+					stmt.executeUpdate();
+					
+					return new Rubric(measurementId, below, meets, exceeds, target);
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
+			}
+		});
+	}
+	
+	@Override
+	public void deleteRubric(final int measurementId) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				try {
+
+					stmt = conn.prepareStatement(
+							"delete from Users where measurement_id=?"
+					);
+
+					
+					stmt.setInt(1, measurementId);
+
+					stmt.executeUpdate();
+					
+					return true;
+				}
+
+				finally {
+					DBUtil.closeQuietly(stmt);
+				}
+
+			}
+		});
+	}
+	
+	@Override
+	public Rubric addRubric(final int measurementId, final int below, final int meets, final int exceeds, final int target){
+		if(this.getRubric(measurementId) == null)
+		{
+			return executeTransaction(new Transaction<Rubric>() {
+				@Override
+				public Rubric execute(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					try {
+
+						stmt = conn.prepareStatement(
+								"insert into Rubrics values (?, ?, ?, ?, ?)"
+						);
+
+					
+						stmt.setInt(1, measurementId);
+						stmt.setInt(2, below);
+						stmt.setInt(3, meets);
+						stmt.setInt(4, exceeds);
+						stmt.setInt(5, target);
+
+						stmt.executeUpdate();
+					
+						return new Rubric(measurementId, below, meets, exceeds, target);
+					}
+
+					finally {
+						DBUtil.closeQuietly(stmt);
+					}
+
+				}
+			});
+		}
+		else{
+			return null;
+		}
+	}
+	
+	@Override
+	public Rubric getRubric(final int measurementId) {
+		return executeTransaction(new Transaction<Rubric>() {
+			@Override
+			public Rubric execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try{
+					stmt = conn.prepareStatement(
+						"select * from Rubrics where measurement_id=?"	
+					);
+					
+					stmt.setInt(1, measurementId);
+					
+					Rubric result = new Rubric();
+					resultSet = stmt.executeQuery();
+					if (resultSet.next() == false)
+					{
+						return null;
+					}
+					else{
+						loadRubric(result, resultSet, 1);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
 			}
 		});
 	}

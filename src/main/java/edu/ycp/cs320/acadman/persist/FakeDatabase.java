@@ -9,6 +9,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public class FakeDatabase implements IDatabase {
@@ -18,6 +19,7 @@ public class FakeDatabase implements IDatabase {
 	private List<Indicator> indicators;
 	private List<Measurement> measurements;
 	private List<User> users;
+	private List<Rubric> rubrics;
 	
 	private int lastId;
 
@@ -27,6 +29,7 @@ public class FakeDatabase implements IDatabase {
 		indicators = new ArrayList<Indicator>();
 		measurements = new ArrayList<Measurement>();
 		users = new ArrayList<User>();
+		rubrics = new ArrayList<Rubric>();
 		
 		lastId = 3;
 	}
@@ -43,6 +46,7 @@ public class FakeDatabase implements IDatabase {
 			indicators.addAll(InitialData.readIndicators());
 			measurements.addAll(InitialData.readMeasurements());
 			users.addAll(InitialData.readUsers());
+			rubrics.addAll(InitialData.readRubrics());
 		} catch (IOException e) {
 			throw new IllegalStateException("Could not read initial data", e);
 		}
@@ -361,10 +365,61 @@ public class FakeDatabase implements IDatabase {
 		for(User x : users)
 		{
 			if(x.getUsername().equals(username)) {
-				x.setUsername(username);
 				x.setPassword(password);
 				x.setEmail(email);
 				x.setPermissions(permissions);
+				edited = x;
+			}
+		}
+		return edited;
+	}
+	
+	@Override
+	public Rubric getRubric(int measurementId) {
+
+		for (Rubric x : rubrics) {
+			
+			if (x.getMeasurementId() == measurementId){
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public Rubric addRubric(int measurementId, int below, int meets, int exceeds, int target) {
+		Rubric x = new Rubric();
+		x.setMeasurementId(measurementId);
+		x.setBelow(below);
+		x.setMeets(meets);
+		x.setExceeds(exceeds);
+		x.setTarget(target);
+		rubrics.add(x);
+		return x;
+	}
+	
+	@Override
+	public void deleteRubric(int measurementId) {
+		Iterator<Rubric> i = rubrics.iterator();
+		while (i.hasNext()) {
+			Rubric x = i.next();
+			if (x.getMeasurementId() == measurementId) {
+				i.remove();
+				return;
+			}
+		}
+	}
+	
+	@Override
+	public Rubric editRubric(int measurementId, int below, int meets, int exceeds, int target) {
+		Rubric edited = new Rubric();
+		for(Rubric x : rubrics)
+		{
+			if(x.getMeasurementId() == measurementId) {
+				x.setBelow(below);
+				x.setMeets(meets);
+				x.setExceeds(exceeds);
+				x.setTarget(target);
 				edited = x;
 			}
 		}

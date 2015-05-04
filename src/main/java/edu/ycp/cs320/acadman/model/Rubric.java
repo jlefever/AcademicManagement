@@ -1,33 +1,25 @@
 package edu.ycp.cs320.acadman.model;
 
 public class Rubric {
-	private int id;
 	private int meets;
 	private int below;
 	private int exceeds;
 	private int target;
-	private int measurementID;
+	private int measurementId;
 	
 	public Rubric() {
 
 	}
-	public Rubric(int id, int meets, int below, int exceeds,
-			int target, int measurementID) {
+	public Rubric(int measurementId, int meets, int below, int exceeds,
+			int target) {
 		super();
-		this.id = id;
 		this.meets = meets;
 		this.below = below;
 		this.exceeds = exceeds;
 		this.target = target;
-		this.measurementID = measurementID;
+		this.measurementId = measurementId;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public int getMeets() {
 		return meets;
 	}
@@ -52,18 +44,18 @@ public class Rubric {
 	public void setTarget(int target) {
 		this.target = target;
 	}
-	public int getMeasurementID() {
-		return measurementID;
+	public int getMeasurementId() {
+		return measurementId;
 	}
-	public void setMeasurementID(int measurementID) {
-		this.measurementID = measurementID;
+	public void setMeasurementId(int measurementId) {
+		this.measurementId = measurementId;
 	}
 	
 	@Override
 	public String toString() {
-		return "Measurement [id=" + id + ", meets=" + meets + ", below="
+		return "Measurement [meets=" + meets + ", below="
 				+ below + ", exceeds=" + exceeds + ", target="
-				+ target + ", measurementID=" + measurementID +"]";
+				+ target + ", measurementId=" + measurementId +"]";
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -74,8 +66,6 @@ public class Rubric {
 		if (getClass() != obj.getClass())
 			return false;
 		Rubric other = (Rubric) obj;
-		if (id != other.id)
-			return false;
 		if (meets != other.meets)
 			return false;
 		if (below != other.below)
@@ -84,7 +74,7 @@ public class Rubric {
 			return false;
 		if (target != other.target)
 			return false;
-		if (measurementID != other.measurementID)
+		if (measurementId != other.measurementId)
 			return false;
 		return true;
 	}

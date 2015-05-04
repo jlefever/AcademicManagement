@@ -9,6 +9,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public class InitialData {
@@ -122,6 +123,30 @@ public class InitialData {
 				thing.setEmail(i.next());
 				thing.setPassword(i.next());
 				thing.setPermissions(Integer.parseInt(i.next()));
+				list.add(thing);
+			}
+			return list;
+		} finally {
+			read.close();
+		}
+	}
+	
+	public static List<Rubric> readRubrics() throws IOException {
+		List<Rubric> list = new ArrayList<Rubric>();
+		ReadCSV read = new ReadCSV("initial_rubrics.csv");
+		
+		try {
+			while(true) {
+				List<String> tuple = read.next();
+				if (tuple == null) break;	
+				Iterator<String> i = tuple.iterator();
+			
+				Rubric thing = new Rubric();
+				thing.setMeasurementId(Integer.parseInt(i.next()));
+				thing.setBelow(Integer.parseInt(i.next()));
+				thing.setMeets(Integer.parseInt(i.next()));
+				thing.setExceeds(Integer.parseInt(i.next()));
+				thing.setTarget(Integer.parseInt(i.next()));
 				list.add(thing);
 			}
 			return list;

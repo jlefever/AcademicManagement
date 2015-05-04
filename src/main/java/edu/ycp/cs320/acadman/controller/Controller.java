@@ -6,6 +6,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 import edu.ycp.cs320.acadman.persist.DatabaseProvider;
 import edu.ycp.cs320.acadman.persist.IDatabase;
@@ -140,55 +141,17 @@ public class Controller {
 		return db.retrieveUsers();
 	}
 	
-	public static void Update(Measurement measurement){
+	public static void Update(Rubric rubric){
 		IDatabase db = DatabaseProvider.getInstance();
-		int runningtotal = 0;
-		int met = measurement.rubric.getMeets() + measurement.rubric.getExceeds();
-		int total = measurement.rubric.getBelow() + met;
 		
-		if (met/total >= measurement.rubric.getTarget()){
-			measurement.setMet(true);
+		int met = rubric.getMeets() + rubric.getExceeds();
+		int total = rubric.getBelow() + met;
+		
+		if ((met/total) >= (rubric.getTarget()/100)){
+			db.getMeasurement(rubric.getMeasurementId()).setMet(true);
 		}
 		else{
-			measurement.setMet(false);
-		}
-		
-		Indicator indicator = db.getIndicator(measurement.getIndicatorId());
-		
-		List<Measurement> measlist = db.retrieveMeasurements(indicator.getId());
-		total = 0;
-		met = 0;
-		for(Measurement m: measlist){
-			total++;
-			if(m.isMet()){
-				met++;
-			}
-		}
-		
-		if(met/total >= indicator.getMinMet()){
-			indicator.setMet(true);
-		}
-		else{
-			indicator.setMet(false);
-		}
-		
-		Outcome outcome = db.getOutcome(indicator.getOutcomeId());
-		
-		List<Indicator> indiclist = db.retrieveIndicators(outcome.getId());
-		total = 0;
-		met = 0;
-		for(Indicator i: indiclist){
-			total++;
-			if(i.isMet()){
-				met++;
-			}
-		}
-		
-		if(met/total >= outcome.getMinMet()){
-			outcome.setMet(true);
-		}
-		else{
-			outcome.setMet(false);
+			db.getMeasurement(rubric.getMeasurementId()).setMet(false);
 		}
 	}
 }
