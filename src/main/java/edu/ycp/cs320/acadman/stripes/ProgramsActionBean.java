@@ -90,7 +90,7 @@ public class ProgramsActionBean extends MyActionBean {
     	}
     	else{	
         Controller.addProgram(name, description, year);
-        programs = Controller.getPrograms(year);
+        programs = Controller.retrievePrograms(year);
         return new ForwardResolution("mainview/Programs.jsp");
     	}
     }
@@ -102,13 +102,13 @@ public class ProgramsActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	Controller.editProgram(progId, newname, newdescription, newyearid);
-    	programs = Controller.getPrograms(newyearid);
+    	programs = Controller.retrievePrograms(newyearid);
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	programs = Controller.getPrograms(viewYear);
+    	programs = Controller.retrievePrograms(viewYear);
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     
@@ -119,7 +119,7 @@ public class ProgramsActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	Controller.deleteProgram(id);
-    	programs = Controller.getPrograms(viewYear);
+    	programs = Controller.retrievePrograms(viewYear);
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     

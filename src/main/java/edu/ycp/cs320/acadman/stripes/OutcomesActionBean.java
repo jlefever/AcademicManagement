@@ -93,7 +93,7 @@ public class OutcomesActionBean extends MyActionBean {
     	else{
     	prog = getContext().getProgram().getId();
         Controller.addOutcome(name, description, minmet, prog);
-        outcomes = Controller.getOutcomes(prog);
+        outcomes = Controller.retrieveOutcomes(prog);
         return new ForwardResolution("mainview/Outcomes.jsp");
     	}
     }
@@ -106,14 +106,14 @@ public class OutcomesActionBean extends MyActionBean {
     	}
     	prog = getContext().getProgram().getId();
     	Controller.editOutcome(outcomeId, newname, newdescription, newminmet, prog);
-    	outcomes = Controller.getOutcomes(prog);
+    	outcomes = Controller.retrieveOutcomes(prog);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
     	prog = getContext().getProgram().getId();
-    	outcomes = Controller.getOutcomes(prog);
+    	outcomes = Controller.retrieveOutcomes(prog);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
@@ -125,7 +125,7 @@ public class OutcomesActionBean extends MyActionBean {
     	}
     	prog = getContext().getProgram().getId();
     	Controller.deleteOutcome(id);
-    	outcomes = Controller.getOutcomes(prog);
+    	outcomes = Controller.retrieveOutcomes(prog);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     

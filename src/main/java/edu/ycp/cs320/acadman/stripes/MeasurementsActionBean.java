@@ -93,7 +93,7 @@ public class MeasurementsActionBean extends MyActionBean {
     	else{
     	indicator = getContext().getIndicator().getId();
         Controller.addMeasurement(name, description, ismet, indicator);
-        measurements = Controller.getMeasurements(indicator);
+        measurements = Controller.retrieveMeasurements(indicator);
         return new ForwardResolution("mainview/Measurements.jsp");
     	}
     }
@@ -106,14 +106,14 @@ public class MeasurementsActionBean extends MyActionBean {
     	}
     	indicator = getContext().getIndicator().getId();
     	Controller.editMeasurement(measurementId, newname, newdescription, newismet, indicator);
-    	measurements = Controller.getMeasurements(indicator);
+    	measurements = Controller.retrieveMeasurements(indicator);
     	return new ForwardResolution("mainview/Measurements.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
     	indicator = getContext().getIndicator().getId();
-    	measurements = Controller.getMeasurements(indicator);
+    	measurements = Controller.retrieveMeasurements(indicator);
     	return new ForwardResolution("mainview/Measurements.jsp");
     }
     
@@ -125,7 +125,7 @@ public class MeasurementsActionBean extends MyActionBean {
     	}
     	indicator = getContext().getIndicator().getId();
     	Controller.deleteMeasurement(id);
-    	measurements = Controller.getMeasurements(indicator);
+    	measurements = Controller.retrieveMeasurements(indicator);
     	return new ForwardResolution("mainview/Measurements.jsp");
     }
     

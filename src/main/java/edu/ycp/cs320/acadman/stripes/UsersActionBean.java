@@ -85,7 +85,7 @@ public class UsersActionBean extends MyActionBean {
     	}
     	else{	
         Controller.addUser(name, email, pwd, permissions);
-        users = Controller.getUsers();
+        users = Controller.retrieveUsers();
         return new ForwardResolution("mainview/Users.jsp");
     	}
     }
@@ -97,13 +97,13 @@ public class UsersActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	Controller.editUser(userId, newemail, newpwd, newpermissions);
-    	users = Controller.getUsers();
+    	users = Controller.retrieveUsers();
     	return new ForwardResolution("mainview/Users.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	users = Controller.getUsers();
+    	users = Controller.retrieveUsers();
     	return new ForwardResolution("mainview/Users.jsp");
     }
     
@@ -120,7 +120,7 @@ public class UsersActionBean extends MyActionBean {
     		return getContext().getSourcePageResolution();
     	}
     	Controller.deleteUser(id);
-    	users = Controller.getUsers();
+    	users = Controller.retrieveUsers();
     	return new ForwardResolution("mainview/Users.jsp");
     }
 }

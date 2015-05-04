@@ -46,6 +46,8 @@ public class SecurityFilter implements Filter {
         userUrls.add("/Indicators.action");
         userUrls.add("/mainview/Measurements.jsp");
         userUrls.add("/Measurements.action");
+        userUrls.add("/mainview/Rubrics.jsp");
+        userUrls.add("/Rubrics.action");
     }
     
     /** Does nothing. */

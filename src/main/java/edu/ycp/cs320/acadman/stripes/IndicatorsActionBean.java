@@ -92,7 +92,7 @@ public class IndicatorsActionBean extends MyActionBean {
     	else{
     	outcome = getContext().getOutcome().getId();
         Controller.addIndicator(name, description, minmet, outcome);
-        indicators = Controller.getIndicators(outcome);
+        indicators = Controller.retrieveIndicators(outcome);
         return new ForwardResolution("mainview/Indicators.jsp");
     	}
     }
@@ -105,14 +105,14 @@ public class IndicatorsActionBean extends MyActionBean {
     	}
     	outcome = getContext().getOutcome().getId();
     	Controller.editIndicator(indicatorId, newname, newdescription, newminmet, outcome);
-    	indicators = Controller.getIndicators(outcome);
+    	indicators = Controller.retrieveIndicators(outcome);
     	return new ForwardResolution("mainview/Indicators.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
     	outcome = getContext().getOutcome().getId();
-    	indicators = Controller.getIndicators(outcome);
+    	indicators = Controller.retrieveIndicators(outcome);
     	return new ForwardResolution("mainview/Indicators.jsp");
     }
     
@@ -124,7 +124,7 @@ public class IndicatorsActionBean extends MyActionBean {
     	}
     	outcome = getContext().getOutcome().getId();
     	Controller.deleteIndicator(id);
-    	indicators = Controller.getIndicators(outcome);
+    	indicators = Controller.retrieveIndicators(outcome);
     	return new ForwardResolution("mainview/Indicators.jsp");
     }
     

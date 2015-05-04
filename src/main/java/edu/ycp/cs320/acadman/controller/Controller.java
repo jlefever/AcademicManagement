@@ -18,22 +18,22 @@ public class Controller {
 		db.Setup();
 	}
 	
-	public static List<Program> getPrograms(int yearId) {
+	public static List<Program> retrievePrograms(int yearId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrievePrograms(yearId);
 	}
 	
-	public static List<Outcome> getOutcomes(int programId) {
+	public static List<Outcome> retrieveOutcomes(int programId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveOutcomes(programId);
 	}
 	
-	public static List<Indicator> getIndicators(int outcomeId) {
+	public static List<Indicator> retrieveIndicators(int outcomeId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveIndicators(outcomeId);
 	}
 	
-	public static List<Measurement> getMeasurements(int indicatorId) {
+	public static List<Measurement> retrieveMeasurements(int indicatorId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveMeasurements(indicatorId);
 	}
@@ -136,7 +136,7 @@ public class Controller {
 		return db.getMeasurement(id);
 	}
 	
-	public static List<User> getUsers(){
+	public static List<User> retrieveUsers(){
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveUsers();
 	}
