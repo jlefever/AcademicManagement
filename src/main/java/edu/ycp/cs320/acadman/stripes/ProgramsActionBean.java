@@ -126,6 +126,6 @@ public class ProgramsActionBean extends MyActionBean {
     public Resolution outcomes() {
     	Program program = Controller.getProgram(viewId);
     	getContext().setProgram(program);
-    	return new RedirectResolution("mainview/Outcomes.jsp");
+    	return new RedirectResolution("/Outcomes.action");
     }
 }

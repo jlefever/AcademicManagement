@@ -19,9 +19,9 @@ public class InitialDataTest {
 	@Test
 	public void testReadPrograms() throws IOException{
 		List<Program> desired = new ArrayList<Program>();
-		desired.add(new Program(1, "Computer Science","Science with computers (also math)",3));
-		desired.add(new Program(2,"Philosophy","Think about stuff",3));
-		desired.add(new Program(3,"Computer Science","Science with computers",2));
+		desired.add(new Program(1, "Computer Science","Science with computers (also math)",2013));
+		desired.add(new Program(2,"Philosophy","Think about stuff",2013));
+		desired.add(new Program(3,"Computer Science","Science with computers",2012));
 		
 		List<Program> actual = InitialData.readPrograms();
 		

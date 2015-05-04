@@ -26,10 +26,10 @@ public class FakeDatabaseTest {
 	@Test
 	public void testRetrievePrograms(){
 		List<Program> desired = new ArrayList<Program>();
-		desired.add(new Program(1,"Computer Science","Science with computers (also math)",3));
-		desired.add(new Program(2,"Philosophy","Think about stuff",3));
+		desired.add(new Program(1,"Computer Science","Science with computers (also math)",2013));
+		desired.add(new Program(2,"Philosophy","Think about stuff",2013));
 		
-		List<Program> actual = db.retrievePrograms(3);
+		List<Program> actual = db.retrievePrograms(2013);
 		
 		assertTrue(desired.size() == actual.size());
 		
@@ -99,11 +99,11 @@ public class FakeDatabaseTest {
 	@Test
 	public void testDeleteProgram(){
 		List<Program> desired = new ArrayList<Program>();
-		desired.add(new Program(1,"Computer Science","Science with computers (also math)",3));
+		desired.add(new Program(1,"Computer Science","Science with computers (also math)",2013));
 		
 		db.deleteProgram(2);
 		
-		List<Program> actual = db.retrievePrograms(3);
+		List<Program> actual = db.retrievePrograms(2013);
 				
 		assertTrue(desired.size() == actual.size());
 		

@@ -13,7 +13,6 @@ import net.sourceforge.stripes.validation.ValidationError;
 import edu.ycp.cs320.acadman.model.Outcome;
 
 public class OutcomesActionBean extends MyActionBean {
-	private List<Outcome> outcomes;
 	
     //@Validate(required=true)
     private String name;
@@ -37,6 +36,8 @@ public class OutcomesActionBean extends MyActionBean {
 	private String newdescription;
 	
 	private int viewId;
+	
+	private List<Outcome> outcomes;
     
 	
     public List<Outcome> getOutcomes() { return outcomes; }
@@ -131,7 +132,7 @@ public class OutcomesActionBean extends MyActionBean {
     public Resolution indicators(){
     	Outcome outcome = Controller.getOutcome(viewId);
     	getContext().setOutcome(outcome);
-    	return new RedirectResolution("mainview/Indicators.jsp");
+    	return new RedirectResolution("/Indicators.action");
     }
     
     public Resolution back(){
