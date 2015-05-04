@@ -12,6 +12,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public class InitialDataTest {
@@ -87,6 +88,20 @@ public class InitialDataTest {
 		assertTrue(desired.size() == actual.size());
 		
 		for (User y: desired){
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testReadRubrics() throws IOException{
+		List<Rubric> desired = new ArrayList<Rubric>();
+		desired.add(new Rubric(1, 5, 13, 7, 70));
+		
+		List<Rubric> actual = InitialData.readRubrics();
+		
+		assertTrue(desired.size() == actual.size());
+		
+		for (Rubric y: desired){
 			assertTrue(actual.contains(y));
 		}
 	}

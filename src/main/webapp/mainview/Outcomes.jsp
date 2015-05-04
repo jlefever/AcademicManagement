@@ -17,11 +17,6 @@
   						</tr>
         			</c:forEach> 
 				</table>
-				 <table>
-					<tr>
-						<td style="test-align: center;"><stripes:submit name="view" value = "View Outcomes"/></td>
-					</tr>
-				</table>
 				<c:if test="${user.permissions == 2}">
 					<table>
 						<tr>

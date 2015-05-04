@@ -53,9 +53,10 @@ public class Controller {
 		db.addIndicator(name, description, minMet, outcomeId);
 	}
 	
-	public static void addMeasurement(String name, String description, boolean isMet, int indicatorId) {
+	public static void addMeasurement(String name, String description, int indicatorId) {
 		IDatabase db = DatabaseProvider.getInstance();
-		db.addMeasurement(name, description, isMet, indicatorId);
+		Measurement temp = db.addMeasurement(name, description, indicatorId);
+		db.addRubric(temp.getId(), 0, 0, 0, 0);
 	}
 	
 	public static void deleteProgram(int id){
@@ -76,6 +77,7 @@ public class Controller {
 	public static void deleteMeasurement(int id){
 		IDatabase db = DatabaseProvider.getInstance();
 		db.deleteMeasurement(id);
+		db.deleteRubric(id);
 	}
 	
 	public static void addUser(String username, String email, String password, int permissions) {
@@ -96,9 +98,9 @@ public class Controller {
 		IDatabase db = DatabaseProvider.getInstance();
 		db.editIndicator(id, name, description, minMet, outcomeId);
 	}
-	public static void editMeasurement(int id, String name, String description, boolean isMet, int indicatorId){
+	public static void editMeasurement(int id, String name, String description,int indicatorId){
 		IDatabase db = DatabaseProvider.getInstance();
-		db.editMeasurement(id, name, description, isMet, indicatorId);
+		db.editMeasurement(id, name, description, indicatorId);
 	}
 	
 	public static void deleteUser(String username) {
@@ -141,17 +143,27 @@ public class Controller {
 		return db.retrieveUsers();
 	}
 	
+	public static Rubric getRubric(int measurementId){
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.getRubric(measurementId);
+	}
+	
+	public static Rubric editRubric(int measurementId, int below, int meets, int exceeds, int target){
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.editRubric(measurementId, below, meets, exceeds, target);
+	}
+	
 	public static void Update(Rubric rubric){
 		IDatabase db = DatabaseProvider.getInstance();
 		
-		int met = rubric.getMeets() + rubric.getExceeds();
-		int total = rubric.getBelow() + met;
+		double met = rubric.getMeets() + rubric.getExceeds();
+		double total = rubric.getBelow() + met;
 		
-		if ((met/total) >= (rubric.getTarget()/100)){
-			db.getMeasurement(rubric.getMeasurementId()).setMet(true);
+		if (((met/total) * 100) >= (rubric.getTarget())){
+			db.updateMet(rubric.getMeasurementId(), true);
 		}
 		else{
-			db.getMeasurement(rubric.getMeasurementId()).setMet(false);
+			db.updateMet(rubric.getMeasurementId(), false);
 		}
 	}
 }

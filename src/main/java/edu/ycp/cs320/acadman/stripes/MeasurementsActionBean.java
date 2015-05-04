@@ -21,11 +21,6 @@ public class MeasurementsActionBean extends MyActionBean {
 
     //@Validate(required=true)
     private String description;
-
-    //@Validate(required=true)
-    private boolean ismet;
-    
-    private boolean newismet;
     
     private int indicator;
     
@@ -47,14 +42,6 @@ public class MeasurementsActionBean extends MyActionBean {
     public void setViewId(int id) { this.viewId = id;}
     
     public int getviewId() {return viewId;}
-    
-    public void setNewismet(boolean newismet) { this.newismet = newismet;}
-    
-    public boolean getNewismet() {return newismet;}
-    
-    public void setIsmet(boolean ismet) { this.ismet = ismet;}
-    
-    public boolean getIsmet(){ return ismet;}
     
     public void setNewdescription(String name) { this.newdescription = name; }
     
@@ -92,7 +79,7 @@ public class MeasurementsActionBean extends MyActionBean {
     	}
     	else{
     	indicator = getContext().getIndicator().getId();
-        Controller.addMeasurement(name, description, ismet, indicator);
+        Controller.addMeasurement(name, description, indicator);
         measurements = Controller.retrieveMeasurements(indicator);
         return new ForwardResolution("mainview/Measurements.jsp");
     	}
@@ -105,7 +92,7 @@ public class MeasurementsActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	indicator = getContext().getIndicator().getId();
-    	Controller.editMeasurement(measurementId, newname, newdescription, newismet, indicator);
+    	Controller.editMeasurement(measurementId, newname, newdescription, indicator);
     	measurements = Controller.retrieveMeasurements(indicator);
     	return new ForwardResolution("mainview/Measurements.jsp");
     }
@@ -129,10 +116,10 @@ public class MeasurementsActionBean extends MyActionBean {
     	return new ForwardResolution("mainview/Measurements.jsp");
     }
     
-    public Resolution measurements(){
+    public Resolution rubric(){
     	Measurement measurement = Controller.getMeasurement(viewId);
     	getContext().setMeasurement(measurement);
-    	return new RedirectResolution("mainview/Test.jsp");
+    	return new RedirectResolution("/Rubrics.action");
     }
     
     public Resolution back(){
