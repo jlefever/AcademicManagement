@@ -13,6 +13,7 @@ import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 import edu.ycp.cs320.acadman.persist.DatabaseProvider;
 import edu.ycp.cs320.acadman.persist.FakeDatabase;
@@ -140,7 +141,7 @@ public class ControllerTest {
 		desired.add(new Measurement(1,"Has killed less than 1 team member","description",false,1));
 		desired.add(new Measurement(4,"Tests","description",false,1));
 		
-		Controller.addMeasurement("Tests","description",false,1);
+		Controller.addMeasurement("Tests","description",1);
 		List<Measurement> actual = Controller.retrieveMeasurements(1);
 		assertTrue(desired.size() == actual.size());
 		
@@ -215,7 +216,7 @@ public class ControllerTest {
 		List<Measurement> desired = new ArrayList<Measurement>();
 		desired.add(new Measurement(1,"Has killed less than 1 team member","A change",false,1));
 		
-		Controller.editMeasurement(1,"Has killed less than 1 team member","A change",false,1);
+		Controller.editMeasurement(1,"Has killed less than 1 team member","A change",1);
 		List<Measurement> actual = Controller.retrieveMeasurements(1);
 		assertTrue(desired.size() == actual.size());
 		
@@ -223,6 +224,34 @@ public class ControllerTest {
 			assertTrue(actual.contains(y));
 		}
 	}
+	
+	@Test
+	public void testEditUser(){
+		List<User> desired = new ArrayList<User>();
+		desired.add(new User("bob", "bob@aol.com", "iambob",1));
+		desired.add(new User("sally", "sally@aol.com", "iamsally",2));
+		desired.add(new User("admin", "admin@aol.com", "iamedit",3));
+		
+		Controller.editUser("admin", "admin@aol.com", "iamedit",3);
+		List<User> actual = Controller.retrieveUsers();
+		assertTrue(desired.size() == actual.size());
+		
+		for (User y : desired) {
+			assertTrue(actual.contains(y));
+		}
+	}
+	
+	@Test
+	public void testEditRubric(){
+		Rubric desired = new Rubric(1,5,13,7,80);
+		
+		Controller.editRubric(1,5,13,7,80);
+		Rubric actual = Controller.getRubric(1);
+		
+		
+			assertTrue(actual.equals(desired));
+	}
+	
 	
 	@Test
 	public void testDeleteProgram(){
@@ -300,6 +329,48 @@ public class ControllerTest {
 	}
 	
 	@Test
+	public void testGetProgram(){
+		Program desired = new Program(1,"Computer Science","Science with computers (also math)",2013);
+		Program actual = Controller.getProgram(1);
+		
+		assertTrue(actual.equals(desired));
+	}
+	
+	@Test
+	public void testGetOutcome(){
+		Outcome desired = new Outcome(1,"An ability to function effectively on teams","description",2,1);
+		Outcome actual = Controller.getOutcome(1);
+		
+		assertTrue(actual.equals(desired));
+	}
+	
+	@Test
+	public void testGetIndicator(){
+		Indicator desired = new Indicator(1,"Has not killed any team members","description",1,1);
+		Indicator actual = Controller.getIndicator(1);
+		
+		assertTrue(actual.equals(desired));
+	}
+	
+	@Test
+	public void testGetMeasurement(){
+		Measurement desired = new Measurement(1,"Has killed less than 1 team member","description",false,1);
+		Measurement actual = Controller.getMeasurement(1);
+		
+		assertTrue(actual.equals(desired));
+	}
+	
+	@Test
+	public void testGetRubric(){
+		Rubric desired = new Rubric(1,5,13,7,70);
+
+		Rubric actual = Controller.getRubric(1);
+		
+		assertTrue(actual.equals(desired));
+	}
+	
+	
+	@Test
 	public void testGetUser(){
 		User desired = new User("bob", "bob@aol.com", "iambob", 1);
 		
@@ -307,4 +378,6 @@ public class ControllerTest {
 		
 		assertTrue(actual.equals(desired));
 	}
+	
+	
 }
