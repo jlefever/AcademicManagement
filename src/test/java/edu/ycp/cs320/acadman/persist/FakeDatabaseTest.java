@@ -138,9 +138,9 @@ public class FakeDatabaseTest {
 				
 		assertTrue(desired.size() == actual.size());
 		
-		for (Indicator y : desired){
-			assertTrue(actual.contains(y));
-		}
+	
+			assertTrue(actual.isEmpty());
+		
 	}
 	
 	@Test
@@ -153,9 +153,8 @@ public class FakeDatabaseTest {
 				
 		assertTrue(desired.size() == actual.size());
 		
-		for (Measurement y : desired){
-			assertTrue(actual.contains(y));
-		}
+		assertTrue(actual.isEmpty());
+		
 	}
 	
 	@Test
