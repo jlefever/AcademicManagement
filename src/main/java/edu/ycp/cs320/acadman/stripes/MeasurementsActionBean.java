@@ -137,6 +137,6 @@ public class MeasurementsActionBean extends MyActionBean {
     
     public Resolution back(){
     	getContext().setIndicator(null);
-    	return new RedirectResolution("mainview/Indicators.jsp");
+    	return new RedirectResolution("/Indicators.action");
     }
 }

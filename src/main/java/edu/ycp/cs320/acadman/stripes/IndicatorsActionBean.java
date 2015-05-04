@@ -131,11 +131,11 @@ public class IndicatorsActionBean extends MyActionBean {
     public Resolution measurements(){
     	Indicator indicator = Controller.getIndicator(viewId);
     	getContext().setIndicator(indicator);
-    	return new RedirectResolution("mainview/Measurements.jsp");
+    	return new RedirectResolution("/Measurements.action");
     }
     
     public Resolution back(){
     	getContext().setOutcome(null);
-    	return new RedirectResolution("mainview/Outcomes.jsp");
+    	return new RedirectResolution("/Outcomes.action");
     }
 }
