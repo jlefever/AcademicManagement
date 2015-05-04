@@ -7,19 +7,29 @@ public class Measurement {
 	private String description;
 	private boolean isMet;
 	private int indicatorId;
+	private Rubric rubric;
 
 	public Measurement() {
 
 	}
 
 	public Measurement(int id, String name, String description, boolean isMet,
-			int indicatorId) {
+			int indicatorId,Rubric rubric) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.isMet = isMet;
 		this.indicatorId = indicatorId;
+		this.rubric = rubric;
+	} 
+
+	public Rubric getRubric() {
+		return rubric;
+	}
+
+	public void setRubric(Rubric rubric) {
+		this.rubric = rubric;
 	}
 
 	public int getId() {
@@ -66,7 +76,7 @@ public class Measurement {
 	public String toString() {
 		return "Measurement [id=" + id + ", name=" + name + ", description="
 				+ description + ", isMet=" + isMet + ", indicatorId="
-				+ indicatorId + "]";
+				+ indicatorId + ", rubric=" + rubric +"]";
 	}
 
 	@Override
@@ -101,6 +111,8 @@ public class Measurement {
 		if (indicatorId != other.indicatorId)
 			return false;
 		if (isMet != other.isMet)
+			return false;
+		if (rubric != other.rubric)
 			return false;
 		if (name == null) {
 			if (other.name != null)
