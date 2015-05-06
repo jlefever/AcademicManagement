@@ -14,7 +14,6 @@ public class Indicator {
 
 	public Indicator(int id, String name, String description, int minMet,
 			int outcomeId) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -67,19 +66,6 @@ public class Indicator {
 		return "Indicator [id=" + id + ", name=" + name + ", description="
 				+ description + ", minMet=" + minMet + ", outcomeId="
 				+ outcomeId + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + id;
-		result = prime * result + minMet;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + outcomeId;
-		return result;
 	}
 
 	@Override

@@ -70,19 +70,6 @@ public class Outcome {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + id;
-		result = prime * result + minMet;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + programId;
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
