@@ -18,9 +18,8 @@ public class MyAppServletContextListener implements ServletContextListener{
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("ServletContextListener started");
-		//DatabaseProvider.setInstance(new FakeDatabase());
 		DatabaseProvider.setInstance(new SQLiteDatabase());
-		Controller.Setup();
+		//Controller.Setup();
 	}
 
 }

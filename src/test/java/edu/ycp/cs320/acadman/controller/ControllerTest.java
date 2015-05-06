@@ -235,7 +235,6 @@ public class ControllerTest {
 		Controller.editUser("admin", "admin@aol.com", "iamedit",3);
 		List<User> actual = Controller.retrieveUsers();
 		assertTrue(desired.size() == actual.size());
-		
 		for (User y : desired) {
 			assertTrue(actual.contains(y));
 		}
@@ -377,6 +376,26 @@ public class ControllerTest {
 		User actual = Controller.getUser("bob");
 		
 		assertTrue(actual.equals(desired));
+	}
+	
+	@Test
+	public void testUpdate(){
+		Rubric testRubric = Controller.getRubric(1);
+		Measurement desired = new Measurement(1, "Has killed less than 1 team member", "description", true, 1);
+		
+		Controller.Update(testRubric);
+		
+		Measurement actual = Controller.getMeasurement(1);
+		
+		assertTrue(actual.equals(desired));
+		
+		Controller.editRubric(1, 5, 13, 7, 81);
+		Controller.Update(testRubric);
+		
+		Measurement desired2 = new Measurement(1, "Has killed less than 1 team member", "description", false, 1);
+		actual = Controller.getMeasurement(1);
+
+		assertTrue(actual.equals(desired2));
 	}
 	
 	

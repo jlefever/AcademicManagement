@@ -359,7 +359,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public User editUser(String username, String password, String email, int permissions) {
+	public User editUser(String username, String email, String password, int permissions) {
 		User edited = new User();
 		for(User x : users)
 		{
