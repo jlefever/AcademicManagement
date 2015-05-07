@@ -72,4 +72,24 @@ public class IndicatorTest {
 		assertEquals(test1.getOutcomeId(),2); 
     }
 	
+	@Test
+    public void testEqual(){
+		Indicator test = new Indicator(1,"test","tester",4,1);
+		Indicator other = new Indicator(1,"test","tester",4,1);
+		//test1.setOutcomeId(2);
+		assertEquals(test.equals(other),true);
+    }
+	
+	@Test
+    public void testToString(){
+		String desired = "Indicator [id=2, name=test, description=test, minMet=3, outcomeId=4]";
+		//test1.setOutcomeId(2);
+		Indicator tester = new Indicator(2,"test","test",3,4);
+		
+		String actual= tester.toString();
+		
+		
+		assertEquals(actual,desired);
+    }
+	
 }

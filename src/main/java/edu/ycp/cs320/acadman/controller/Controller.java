@@ -13,10 +13,10 @@ import edu.ycp.cs320.acadman.persist.IDatabase;
 
 public class Controller {
 	
-	/*public static void Setup(){
+	public static void Setup(){
 		IDatabase db = DatabaseProvider.getInstance();
 		db.Setup();
-	}*/
+	}
 	
 	public static List<Program> retrievePrograms(int yearId) {
 		IDatabase db = DatabaseProvider.getInstance();

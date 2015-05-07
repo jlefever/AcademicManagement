@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.acadman.model.Rubric;
 import edu.ycp.cs320.acadman.model.User;
 
 public class UserTest {
@@ -60,4 +61,22 @@ public class UserTest {
 		test1.setPermissions(1);
 		assertEquals(test1.getPermissions(),1); 
     }
+	
+	@Test
+    public void testEqual(){
+		User test = new User("test", "testEmail", "password",0);
+		User other = new User("test", "testEmail", "password",0);
+		//test1.setOutcomeId(2);
+		assertEquals(test.equals(other),true);
+    }
+	
+	@Test
+    public void testToString(){
+		String desired = "User [username=test, email=testEmail, password=password, permissions=0]";
+		//test1.setOutcomeId(2);
+		User tester = new User("test", "testEmail", "password",0);
+		
+		String actual= tester.toString();
+		assertEquals(actual,desired);
+	}
 }

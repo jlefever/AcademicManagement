@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.acadman.model.Indicator;
 import edu.ycp.cs320.acadman.model.Measurement;
 
 public class MeasurementTest {
@@ -71,4 +72,23 @@ public class MeasurementTest {
 			test1.setIndicatorId(2);
 			assertEquals(test1.getIndicatorId(),2); 
 	    }
+		
+		@Test
+	    public void testEqual(){
+			Measurement test = new Measurement(1,"measure", "test", false,1);
+			Measurement other = new Measurement(1,"measure", "test", false,1);
+			//test1.setOutcomeId(2);
+			assertEquals(test.equals(other),true);
+	    }
+		
+		@Test
+	    public void testToString(){
+			String desired = "Measurement [id=2, name=test, description=test, isMet=false, indicatorId=4]";
+			//test1.setOutcomeId(2);
+			Measurement tester = new Measurement(2,"test","test",false,4);
+			
+			String actual= tester.toString();
+			assertEquals(actual,desired);
+		}
+		
 }

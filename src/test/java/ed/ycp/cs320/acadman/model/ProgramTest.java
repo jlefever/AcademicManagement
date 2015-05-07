@@ -15,7 +15,7 @@ public class ProgramTest {
 	@Before
 	public void setup(){
 		
-		test1 = new Program(1,"Program", "test",2014 );
+		test1 = new Program(1,"Program", "test",2014);
 	}
 	
 	@Test
@@ -62,5 +62,23 @@ public class ProgramTest {
 		test1.setYear(2015);
 		assertEquals(test1.getYear(),2015); 
     }
+	
+	@Test
+    public void testEqual(){
+		Program test = new Program(1,"Program", "test",2014);
+		Program other = new Program(1,"Program", "test",2014);
+		//test1.setOutcomeId(2);
+		assertEquals(test.equals(other),true);
+    }
+	
+	@Test
+    public void testToString(){
+		String desired = "Program [id=1, name=test, description=test, yearId=2014]";
+		//test1.setOutcomeId(2);
+		Program tester = new Program(1,"test", "test",2014);
+		
+		String actual= tester.toString();
+		assertEquals(actual,desired);
+	}
 	
 }

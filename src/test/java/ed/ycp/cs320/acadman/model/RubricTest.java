@@ -72,4 +72,22 @@ public class RubricTest {
 			test1.setTarget(10);
 			assertEquals(test1.getExceeds(),10); 
 	    }
+		
+		@Test
+	    public void testEqual(){
+			Rubric test = new Rubric(1,3,10,10,50);
+			Rubric other = new Rubric(1,3,10,10,50);
+			//test1.setOutcomeId(2);
+			assertEquals(test.equals(other),true);
+	    }
+		
+		@Test
+	    public void testToString(){
+			String desired = "Rubric [meets=10, below=3, exceeds=10, target=50, measurementId=1]";
+			//test1.setOutcomeId(2);
+			Rubric tester = new Rubric(1,3,10,10,50);
+			
+			String actual= tester.toString();
+			assertEquals(actual,desired);
+		}
 }

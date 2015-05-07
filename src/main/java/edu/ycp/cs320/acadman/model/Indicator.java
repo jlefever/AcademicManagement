@@ -67,6 +67,8 @@ public class Indicator {
 				+ description + ", minMet=" + minMet + ", outcomeId="
 				+ outcomeId + "]";
 	}
+	
+
 
 	@Override
 	public boolean equals(Object obj) {
