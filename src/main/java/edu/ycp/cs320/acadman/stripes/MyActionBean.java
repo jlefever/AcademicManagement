@@ -12,7 +12,7 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 public class MyActionBean implements ActionBean{
 	
-	private AMActionBeanContext context;
+	private MyActionBeanContext context;
 	//private List<Program> programs = Controller.getPrograms(3);
 	
 	/*@ValidateNestedProperties ({
@@ -22,13 +22,13 @@ public class MyActionBean implements ActionBean{
 	})*/
 	
 	@Override
-	public AMActionBeanContext getContext() {
+	public MyActionBeanContext getContext() {
 		return this.context;
 	}
 
 	@Override
 	public void setContext(ActionBeanContext context) {
-		this.context = (AMActionBeanContext) context;
+		this.context = (MyActionBeanContext) context;
 	}
 
 	/*public List<Program> getPrograms() {

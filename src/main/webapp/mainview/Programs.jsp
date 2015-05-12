@@ -32,6 +32,7 @@
 							<td>${program.name}</td>
 							<td>${program.description}</td>
 							<td>${program.year}</td>
+							<td><stripes:link href="/Outcomes.action" event="view">Open<stripes:param name="progId" value="${program.id}"/></stripes:link></td>
 						</tr>
 					</c:forEach>
 					<c:if test="${user.permissions == 2 }">
