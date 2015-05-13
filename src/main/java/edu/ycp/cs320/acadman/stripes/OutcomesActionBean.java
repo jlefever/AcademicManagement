@@ -84,11 +84,6 @@ public class OutcomesActionBean extends MyActionBean {
     
     public int getProg() { return progId;}
     
-    public Resolution open() {
-    	outcomes = Controller.retrieveOutcomes(progId);
-    	return new ForwardResolution("mainview/Outcomes.jsp");
-    }
-    
     public Resolution add() {
     	if(getContext().getUser().getPermissions() != 2){
     		ValidationError error = new SimpleError("You do not have permission to do that.");
@@ -142,6 +137,6 @@ public class OutcomesActionBean extends MyActionBean {
     
     public Resolution back(){
     	getContext().setProgram(null);
-    	return new RedirectResolution("mainview/Programs.jsp");
+    	return new RedirectResolution("/Programs.action");
     }
 }

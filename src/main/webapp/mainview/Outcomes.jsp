@@ -12,6 +12,7 @@
 <body>
 	<stripes:form action="/Outcomes.action" focus="">
 		<h1>Outcomes</h1>
+		<h3>${program.name}</h3>
 		<table class="gridtable">
 			<tr>
 				<th>ID</th>
@@ -32,12 +33,12 @@
 					<td>${outcome.minMet}</td>
 					<td>${outcome.programId}</td>
 					<!-- View -->
-					<td><stripes:link href="/Outcome.action" event="indicators">View<stripes:param
+					<td><stripes:link href="/Outcomes.action" event="indicators">View<stripes:param
 								name="viewId" value="${outcome.id}" />
 						</stripes:link></td>
 					<!-- Delete -->
 					<c:if test="${user.permissions == 2 }">
-						<td><stripes:link href="/Outcome.action" event="delete">Delete<stripes:param
+						<td><stripes:link href="/Outcomes.action" event="delete">Delete<stripes:param
 									name="id" value="${outcome.id}" />
 							</stripes:link></td>
 					</c:if>
@@ -73,15 +74,16 @@
 					<td><stripes:text name="newdescription" /></td>
 				</tr>
 				<tr>
-					<td><stripes:label for="New Year" />:</td>
-					<td><stripes:text name="newyearid" /></td>
+					<td><stripes:label for="New Min Met" />:</td>
+					<td><stripes:text name="newminmet" /></td>
 				</tr>
 				<tr>
 					<td><stripes:submit class="button" name="edit"
-							value="Edit Program" /></td>
+							value="Edit Outcome" /></td>
 				</tr>
 			</table>
 		</c:if>
+		<stripes:submit class="button" name="back" value="Back to Programs" />
 	</stripes:form>
 </body>
 </html>

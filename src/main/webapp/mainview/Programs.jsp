@@ -46,9 +46,9 @@
 			<c:if test="${user.permissions == 2 }">
 				<tr>
 					<td></td>
-					<td><stripes:text name="name" /></td>
-					<td><stripes:text name="description" /></td>
-					<td><stripes:text name="year" /></td>
+					<td><stripes:text class="add" name="name" /></td>
+					<td><stripes:text class="add" name="description" /></td>
+					<td><stripes:text class="add" name="year" /></td>
 					<td><stripes:submit class="button" name="add" value="Add" /></td>
 				</tr>
 			</c:if>
