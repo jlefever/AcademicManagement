@@ -83,9 +83,11 @@
 					<td><stripes:submit class="button" name="edit"
 							value="Edit Indicator" /></td>
 				</tr>
+				<tr>
+				<td><stripes:submit class="button" name="back" value="Back to Outcomes" /></td>
+				</tr>
 			</table>
 		</c:if>
-		<stripes:submit class="button" name="back" value="Back to Outcomes" />
 	</stripes:form>
 </body>
 </html>
