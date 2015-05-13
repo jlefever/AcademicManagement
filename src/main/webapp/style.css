@@ -44,6 +44,10 @@ table.gridtable td {
 	background-color: #ffffff;
 }
 
+.add {
+	width:100%;
+}
+
 /* Button */
 .button {
 	-moz-box-shadow: inset 0px 1px 0px 0px #9acc85;

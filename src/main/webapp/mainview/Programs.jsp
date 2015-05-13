@@ -7,12 +7,11 @@
 <html>
 <head>
 <title>Programs</title>
-<link rel="stylesheet" type="text/css" href="/style.css"/>
+<link rel="stylesheet" type="text/css" href="/style.css" />
 </head>
 <body>
-	<h1>Programs</h1>
-
 	<stripes:form action="/Programs.action" focus="">
+		<h1>Programs</h1>
 		<%-- <stripes:submit name="view" value="View Programs" /> --%>
 		<table class="gridtable">
 			<tr>
@@ -31,9 +30,11 @@
 					<td>${program.name}</td>
 					<td>${program.description}</td>
 					<td>${program.year}</td>
-					<td><stripes:link  href="/Programs.action" event="outcomes">Open<stripes:param
+					<!-- View -->
+					<td><stripes:link href="/Programs.action" event="outcomes">View<stripes:param
 								name="viewId" value="${program.id}" />
 						</stripes:link></td>
+					<!-- Delete -->
 					<c:if test="${user.permissions == 2 }">
 						<td><stripes:link href="/Programs.action" event="delete">Delete<stripes:param
 									name="id" value="${program.id}" />
@@ -41,6 +42,7 @@
 					</c:if>
 				</tr>
 			</c:forEach>
+			<!-- Add -->
 			<c:if test="${user.permissions == 2 }">
 				<tr>
 					<td></td>
@@ -52,6 +54,7 @@
 			</c:if>
 		</table>
 		<br />
+		<!-- Edit -->
 		<c:if test="${user.permissions == 2}">
 			<h3>Edit Program</h3>
 			<table>
@@ -64,8 +67,7 @@
 					<td><stripes:text name="newname" /></td>
 				</tr>
 				<tr>
-					<td><stripes:label
-							for="New Description" />:</td>
+					<td><stripes:label for="New Description" />:</td>
 					<td><stripes:text name="newdescription" /></td>
 				</tr>
 				<tr>
