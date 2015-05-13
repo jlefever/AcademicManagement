@@ -632,7 +632,7 @@ public class SQLiteDatabase implements IDatabase {
 
 					stmt = conn.prepareStatement(
 							"update Indicators " +
-							"set name=?, description=?, min_met=? outcome_id=?" +
+							"set name=?, description=?, min_met=?, outcome_id=?" +
 							"where id = ?"
 					);
 

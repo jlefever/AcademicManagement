@@ -52,7 +52,7 @@
 					<td></td>
 					<td><stripes:text class="add" name="name" /></td>
 					<td><stripes:text class="add" name="description" /></td>
-					<td><stripes:text class="add" name="minMet" /></td>
+					<td><stripes:text class="add" name="minmet" /></td>
 					<td></td>
 					<td><stripes:submit class="button" name="add" value="Add" /></td>
 				</tr>

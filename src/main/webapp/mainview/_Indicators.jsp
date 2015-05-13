@@ -26,7 +26,7 @@
 								<td style="font-weight: bold;"><stripes:label for="description"/>:</td>
 								<td><stripes:text name="description" /></td>
 								<td style="font-weight: bold;"><stripes:label for="minMet"/>:</td>
-								<td><stripes:text name="minMet" /></td>
+								<td><stripes:text name="minmet" /></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;"><stripes:submit name="add" value="Add" /></td>

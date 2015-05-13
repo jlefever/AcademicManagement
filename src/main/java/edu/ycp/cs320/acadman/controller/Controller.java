@@ -14,11 +14,11 @@ import edu.ycp.cs320.acadman.persist.IDatabase;
 public class Controller {
 	
 	//Setup Method used to initialize a fresh database with original initial data only. The Call to this method is in MyAppServletContextListener
-	public static void Setup(){
+	/*public static void Setup(){
 		IDatabase db = DatabaseProvider.getInstance();
 		db.Setup();
 	}
-	
+	*/
 	public static List<Program> retrieveAllPrograms() {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrieveAllPrograms();
