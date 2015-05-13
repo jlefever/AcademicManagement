@@ -25,7 +25,7 @@ public class OutcomesActionBean extends MyActionBean {
     
     private int newminmet;
     
-    private int prog;
+    private int progId;
     
     private int id;
 
@@ -80,9 +80,9 @@ public class OutcomesActionBean extends MyActionBean {
     
     public String getDescription() { return description; }
     
-    public void setProg(int prog) {this.prog = prog;}
+    public void setProg(int prog) {this.progId = prog;}
     
-    public int getProg() { return prog;}
+    public int getProg() { return progId;}
     
     public Resolution add() {
     	if(getContext().getUser().getPermissions() != 2){
@@ -91,9 +91,9 @@ public class OutcomesActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	else{
-    	prog = getContext().getProgram().getId();
-        Controller.addOutcome(name, description, minmet, prog);
-        outcomes = Controller.retrieveOutcomes(prog);
+    	progId = getContext().getProgram().getId();
+        Controller.addOutcome(name, description, minmet, progId);
+        outcomes = Controller.retrieveOutcomes(progId);
         return new ForwardResolution("mainview/Outcomes.jsp");
     	}
     }
@@ -104,16 +104,16 @@ public class OutcomesActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	prog = getContext().getProgram().getId();
-    	Controller.editOutcome(outcomeId, newname, newdescription, newminmet, prog);
-    	outcomes = Controller.retrieveOutcomes(prog);
+    	progId = getContext().getProgram().getId();
+    	Controller.editOutcome(outcomeId, newname, newdescription, newminmet, progId);
+    	outcomes = Controller.retrieveOutcomes(progId);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	prog = getContext().getProgram().getId();
-    	outcomes = Controller.retrieveOutcomes(prog);
+    	progId = getContext().getProgram().getId();
+    	outcomes = Controller.retrieveOutcomes(progId);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
@@ -123,9 +123,9 @@ public class OutcomesActionBean extends MyActionBean {
             getContext().getValidationErrors().add("username", error);
             return getContext().getSourcePageResolution();
     	}
-    	prog = getContext().getProgram().getId();
+    	progId = getContext().getProgram().getId();
     	Controller.deleteOutcome(id);
-    	outcomes = Controller.retrieveOutcomes(prog);
+    	outcomes = Controller.retrieveOutcomes(progId);
     	return new ForwardResolution("mainview/Outcomes.jsp");
     }
     
@@ -137,6 +137,6 @@ public class OutcomesActionBean extends MyActionBean {
     
     public Resolution back(){
     	getContext().setProgram(null);
-    	return new RedirectResolution("mainview/Programs.jsp");
+    	return new RedirectResolution("/Programs.action");
     }
 }

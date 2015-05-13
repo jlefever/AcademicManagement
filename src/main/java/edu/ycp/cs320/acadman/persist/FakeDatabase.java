@@ -434,4 +434,9 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 	}
+
+	@Override
+	public List<Program> retrieveAllPrograms() {
+		return programs;
+	}
 }

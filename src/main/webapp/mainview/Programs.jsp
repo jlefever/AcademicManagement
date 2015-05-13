@@ -4,104 +4,83 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<table style="vertical-align: top;">
-	<tr>
-		<td style="width: 25%; vertical-align: top;">
-			<!-- Somewhat contrived example of using the errors tag 'action' attribute. -->
-			<stripes:errors action="/Programs.action" /> <stripes:form
-				action="/Programs.action" focus="">
-
-				<table>
-					<tr>
-						<td style="font-weight: bold;"><stripes:label for="Year" />:</td>
-						<td><stripes:text name="viewYear" /></td>
-					</tr>
-					<tr>
-						<td style="test-align: left;"><stripes:submit name="view"
-								value="View Programs" /></td>
-					</tr>
-				</table>
-				<table border="1">
-					<th>ID</th>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Year</th>
-					<c:forEach items="${actionBean.programs}" var="program">
-						<tr>
-							<td>${program.id}</td>
-							<td>${program.name}</td>
-							<td>${program.description}</td>
-							<td>${program.year}</td>
-						</tr>
-					</c:forEach>
+<html>
+<head>
+<title>Programs</title>
+<link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body>
+	<stripes:form action="/Programs.action" focus="">
+		<h1>Programs</h1>
+		<%-- <stripes:submit name="view" value="View Programs" /> --%>
+		<table class="gridtable">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Year</th>
+				<th></th>
+				<c:if test="${user.permissions == 2}">
+					<th></th>
+				</c:if>
+			</tr>
+			<c:forEach items="${actionBean.programs}" var="program">
+				<tr>
+					<td>${program.id}</td>
+					<td>${program.name}</td>
+					<td>${program.description}</td>
+					<td>${program.year}</td>
+					<!-- View -->
+					<td><stripes:link href="/Programs.action" event="outcomes">View<stripes:param
+								name="viewId" value="${program.id}" />
+						</stripes:link></td>
+					<!-- Delete -->
 					<c:if test="${user.permissions == 2 }">
-						<tr>
-							<td></td>
-							<td><stripes:text name="name"/></td>
-							<td><stripes:text name="description"/></td>
-							<td><stripes:text name="year"/></td>
-							<td><stripes:submit name="add" value="Add"/></td>
-						</tr>
+						<td><stripes:link href="/Programs.action" event="delete">Delete<stripes:param
+									name="id" value="${program.id}" />
+							</stripes:link></td>
 					</c:if>
-				</table>
-				<%-- <c:if test="${user.permissions == 2}">
-					<table>
-						<tr>
-							<td style="font-weight: bold;"><stripes:label for="name" />:</td>
-							<td><stripes:text name="name" /></td>
-							<td style="font-weight: bold;"><stripes:label
-									for="description" />:</td>
-							<td><stripes:text name="description" /></td>
-							<td style="font-weight: bold;"><stripes:label for="year" />:</td>
-							<td><stripes:text name="year" /></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;"><stripes:submit name="add"
-									value="Add" /></td>
-						</tr>
-					</table>
-					<table>
-						<tr>
-							<td style="font-weight: bold;"><stripes:label
-									for="Program Id" />:</td>
-							<td><stripes:text name="progId" /></td>
-							<td style="font-weight: bold;"><stripes:label for="New Name" />:</td>
-							<td><stripes:text name="newname" /></td>
-							<td style="font-weight: bold;"><stripes:label
-									for="New Description" />:</td>
-							<td><stripes:text name="newdescription" /></td>
-							<td style="font-weight: bold;"><stripes:label for="New Year" />:</td>
-							<td><stripes:text name="newyearid" /></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;"><stripes:submit name="edit"
-									value="Edit Program" /></td>
-						</tr>
-					</table>
-					<table>
-						<tr>
-							<td style="font-weight: bold;"><stripes:label
-									for="Program id" />:</td>
-							<td><stripes:text name="id" /></td>
-						</tr>
-						<tr>
-							<td style="text-align: left;"><stripes:submit name="delete"
-									value="Delete" /></td>
-						</tr>
-					</table>
-				</c:if> --%>
-				<table>
-					<tr>
-						<td style="font-weight: bold;"><stripes:label
-								for="View Outcomes for Program Id" />:</td>
-						<td><stripes:text name="viewId" /></td>
-					</tr>
-					<tr>
-						<td style="text-align: left;"><stripes:submit name="outcomes"
-								value="View Outcomes" /></td>
-					</tr>
-				</table>
-			</stripes:form>
-		</td>
-	</tr>
-</table>
+				</tr>
+			</c:forEach>
+			<!-- Add -->
+			<c:if test="${user.permissions == 2 }">
+				<tr>
+					<td></td>
+					<td><stripes:text class="add" name="name" /></td>
+					<td><stripes:text class="add" name="description" /></td>
+					<td><stripes:text class="add" name="year" /></td>
+					<td><stripes:submit class="button" name="add" value="Add" /></td>
+				</tr>
+			</c:if>
+		</table>
+		<br />
+		<!-- Edit -->
+		<c:if test="${user.permissions == 2}">
+			<h3>Edit Program</h3>
+			<table>
+				<tr>
+					<td><stripes:label for="Program Id" />:</td>
+					<td><stripes:text name="progId" /></td>
+				</tr>
+				<tr>
+					<td><stripes:label for="New Name" />:</td>
+					<td><stripes:text name="newname" /></td>
+				</tr>
+				<tr>
+					<td><stripes:label for="New Description" />:</td>
+					<td><stripes:text name="newdescription" /></td>
+				</tr>
+				<tr>
+					<td><stripes:label for="New Year" />:</td>
+					<td><stripes:text name="newyearid" /></td>
+				</tr>
+				<tr>
+					<td><stripes:submit class="button" name="edit"
+							value="Edit Program" /></td>
+				</tr>
+			</table>
+		</c:if>
+	</stripes:form>
+</body>
+</html>
+

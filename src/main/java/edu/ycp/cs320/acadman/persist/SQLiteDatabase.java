@@ -90,7 +90,41 @@ public class SQLiteDatabase implements IDatabase {
 
 		return conn;
 	}
-
+	
+	@Override
+	public List<Program> retrieveAllPrograms() {
+		return executeTransaction(new Transaction<List<Program>>() {
+			@Override
+			public List<Program> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from programs"
+					);
+					
+					List<Program> result = new ArrayList<Program>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while (resultSet.next()) {
+						Program program = new Program();
+						loadProgram(program, resultSet, 1);
+						
+						result.add(program);
+					}
+					
+					return result;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
 	@Override
 	public List<Program> retrievePrograms(final int yearId) {
 		return executeTransaction(new Transaction<List<Program>>() {
