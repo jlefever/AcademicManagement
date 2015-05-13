@@ -2,14 +2,13 @@ package edu.ycp.cs320.acadman.stripes;
 
 import java.util.List;
 
-import edu.ycp.cs320.acadman.controller.Controller;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.SimpleError;
-import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationError;
+import edu.ycp.cs320.acadman.controller.Controller;
 import edu.ycp.cs320.acadman.model.Program;
 
 public class ProgramsActionBean extends MyActionBean {
@@ -90,7 +89,7 @@ public class ProgramsActionBean extends MyActionBean {
     	}
     	else{	
         Controller.addProgram(name, description, year);
-        programs = Controller.retrievePrograms(year);
+        programs = Controller.retrieveAllPrograms();
         return new ForwardResolution("mainview/Programs.jsp");
     	}
     }
@@ -102,13 +101,13 @@ public class ProgramsActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	Controller.editProgram(progId, newname, newdescription, newyearid);
-    	programs = Controller.retrievePrograms(newyearid);
+    	programs = Controller.retrieveAllPrograms();
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     
     @DefaultHandler
     public Resolution view() {
-    	programs = Controller.retrievePrograms(viewYear);
+    	programs = Controller.retrieveAllPrograms();
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     
@@ -119,7 +118,7 @@ public class ProgramsActionBean extends MyActionBean {
             return getContext().getSourcePageResolution();
     	}
     	Controller.deleteProgram(id);
-    	programs = Controller.retrievePrograms(viewYear);
+    	programs = Controller.retrieveAllPrograms();
     	return new ForwardResolution("mainview/Programs.jsp");
     }
     

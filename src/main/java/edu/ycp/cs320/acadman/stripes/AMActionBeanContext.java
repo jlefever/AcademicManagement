@@ -7,7 +7,7 @@ import edu.ycp.cs320.acadman.model.Outcome;
 import edu.ycp.cs320.acadman.model.Program;
 import edu.ycp.cs320.acadman.model.User;
 
-public class MyActionBeanContext extends ActionBeanContext {
+public class AMActionBeanContext extends ActionBeanContext {
 
     /** Gets the currently logged in user, or null if no-one is logged in. */
     public User getUser() {

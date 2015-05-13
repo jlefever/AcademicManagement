@@ -19,6 +19,11 @@ public class Controller {
 		db.Setup();
 	}
 	
+	public static List<Program> retrieveAllPrograms() {
+		IDatabase db = DatabaseProvider.getInstance();
+		return db.retrieveAllPrograms();
+	}
+	
 	public static List<Program> retrievePrograms(int yearId) {
 		IDatabase db = DatabaseProvider.getInstance();
 		return db.retrievePrograms(yearId);

@@ -13,6 +13,8 @@ public interface IDatabase {
 	
 	public void Setup();
 	
+	public List<Program> retrieveAllPrograms();
+	
 	public List<Program> retrievePrograms(int yearId);
 
 	public List<Outcome> retrieveOutcomes(int programId);
