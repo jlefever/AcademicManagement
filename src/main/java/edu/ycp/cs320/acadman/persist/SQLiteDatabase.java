@@ -1256,7 +1256,7 @@ public class SQLiteDatabase implements IDatabase {
 				try {
 
 					stmt = conn.prepareStatement(
-							"delete from Users where measurement_id=?"
+							"delete from Rubrics where measurement_id=?"
 					);
 
 					

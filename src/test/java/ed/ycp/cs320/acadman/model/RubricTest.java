@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.acadman.model.Outcome;
-import edu.ycp.cs320.acadman.model.Program;
 import edu.ycp.cs320.acadman.model.Rubric;
 	
 
